@@ -1,12 +1,23 @@
-import {Button} from "./components/ui/button";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import AppLayout from "./components/pages/AppLayout";
+import Home from "./components/pages/Home";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+    ],
+  },
+]);
 
 function App() {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h2 className="text-2xl underline">Feedlyze</h2>;
-      <Button>Test Button</Button>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
