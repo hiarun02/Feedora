@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "./ui/accordion";
 
 export function FAQSection() {
   const faqs = [
@@ -34,15 +34,13 @@ export function FAQSection() {
       </h2>
       <Accordion type="single" collapsible className="w-[70vw] mx-auto">
         {faqs.map((faq) => (
-          <AccordionItem value={faq.id} className="" key={faq.id}>
-            <div className="mb-4">
-              <AccordionTrigger className="w-full text-left font-medium lg:text-lg text-base">
-                {faq.question}
-              </AccordionTrigger>
-              <AccordionContent className="flex flex-col gap-4 text-balance max-w-6xl lg:text-base text-sm mt-2">
-                {faq.answer}
-              </AccordionContent>
-            </div>
+          <AccordionItem value={faq.id} key={faq.id}>
+            <AccordionTrigger className="text-left font-medium lg:text-lg text-base">
+              {faq.question}
+            </AccordionTrigger>
+            <AccordionContent className="lg:text-base text-sm text-muted-foreground">
+              {faq.answer}
+            </AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>

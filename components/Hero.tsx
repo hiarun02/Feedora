@@ -12,7 +12,7 @@ import {BackgroundRippleEffect} from "./ui/background-ripple-effect";
 
 const Hero = () => {
   return (
-    <section id="home" className="min-h-screen flex bg-white flex-col relative">
+    <section id="home" className="min-h-screen flex bg-white flex-col py-10">
       <BackgroundRippleEffect />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-10 z-10 ">
         <div className="flex flex-col items-center max-w-4xl mx-auto mt-12 sm:mt-20">

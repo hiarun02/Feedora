@@ -6,11 +6,11 @@ const Login = () => {
   const isLoading = false;
   return (
     <>
-      <section className=" pt-10 pb-10">
-        <div className="max-w-2xl mx-auto border-1 shadow-2xs rounded-2xl">
+      <section className="h-screen flex flex-col justify-center px-5">
+        <div className="mx-auto border-1 shadow-2xs rounded-2xl w-full max-w-lg bg-white">
           <form className="bg-white px-10 py-5">
             {/* Email */}
-            <div className="mb-5">
+            <div className="mb-5 w-full">
               <Label className="block text-gray-700 mb-2">Your Email</Label>
               <Input
                 type="text"
