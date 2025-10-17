@@ -9,7 +9,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="w-full  text-black border-b border-gray-200">
+    <header className="w-full  text-black bg-white shadow-2xs fixed top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-15">
           {/* Logo */}

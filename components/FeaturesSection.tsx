@@ -1,3 +1,5 @@
+import {PointerHighlight} from "./ui/pointer-highlight";
+
 const FeaturesSection = () => {
   const features = [
     {
@@ -39,8 +41,8 @@ const FeaturesSection = () => {
   ];
   return (
     <div className="mx-auto max-w-6xl lg:py-20 py-10 relative">
-      <h2 className="text-center font-extrabold lg:text-4xl text-3xl my-10 lg:mb-25 mb-20">
-        Our Features
+      <h2 className="flex justify-center items-center font-extrabold lg:text-4xl text-3xl my-10 lg:mb-25 mb-20">
+        <PointerHighlight>Our Features</PointerHighlight>
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-5">
         {features.map((feature, index) => (

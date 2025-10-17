@@ -1,3 +1,5 @@
+import {PointerHighlight} from "./ui/pointer-highlight";
+
 const HowItWorks = () => {
   const steps = [
     {
@@ -19,8 +21,8 @@ const HowItWorks = () => {
 
   return (
     <div className="mx-auto max-w-6xl py-10">
-      <h2 className="text-center font-extrabold lg:text-4xl text-3xl my-10 mb-20">
-        How It Works
+      <h2 className="flex justify-center items-center font-extrabold lg:text-4xl text-3xl my-10 mb-20">
+        <PointerHighlight>How It Works</PointerHighlight>
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-5">
         {steps.map((step, index) => (
