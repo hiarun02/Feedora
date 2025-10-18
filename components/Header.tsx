@@ -65,7 +65,27 @@ export default function Header() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-3">
+            {/* theme toggle */}
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="px-3 py-2">
+                  Theme
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem onClick={() => setTheme("light")}>
+                  Light
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                  Dark
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("system")}>
+                  System
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <button
               onClick={() => setOpen(!open)}
               aria-expanded={open}
@@ -73,6 +93,7 @@ export default function Header() {
               className="inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
             >
               <span className="sr-only">Open main menu</span>
+
               {open ? (
                 <svg
                   className="h-6 w-6"
@@ -126,10 +147,7 @@ export default function Header() {
           </nav>
 
           <div className="pt-3 border-t border-white/10 flex flex-col gap-3">
-            <Link
-              href="/login"
-              className="px-3 py-2 border border-white rounded text-center"
-            >
+            <Link href="/login" className="px-3 py-2  rounded text-center">
               <Button className="w-full">Login</Button>
             </Link>
             <Link
@@ -139,7 +157,6 @@ export default function Header() {
               <Button className="w-full">Sign up</Button>
             </Link>
           </div>
-          {/* theme toggleq */}
         </div>
       </div>
     </header>
