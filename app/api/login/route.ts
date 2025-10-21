@@ -84,6 +84,25 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Login error:", error);
 
+    // More specific error handling for debugging
+    if (error instanceof Error) {
+      if (error.message.includes("JWT_SECRET")) {
+        return NextResponse.json(
+          {error: "Server configuration error. JWT_SECRET not set."},
+          {status: 500}
+        );
+      }
+      if (
+        error.message.includes("connect") ||
+        error.message.includes("database")
+      ) {
+        return NextResponse.json(
+          {error: "Database connection error. Please try again later."},
+          {status: 500}
+        );
+      }
+    }
+
     return NextResponse.json(
       {error: "Internal server error. Please try again later."},
       {status: 500}
