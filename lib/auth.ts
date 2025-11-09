@@ -20,28 +20,46 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
       },
       authorize: async (credentials) => {
         try {
+          console.log("🔐 Starting authentication process...");
+
           const parsedValues = credentialsSchema.parse(credentials);
           const {email, password} = parsedValues;
 
+          console.log("📧 Looking for user with email:", email);
+
           let user = await prisma.user.findUnique({where: {email}});
+          console.log("👤 User found:", user ? "Yes" : "No");
 
           // If user does not exist, create a new one
           if (!user) {
+            console.log("🆕 Creating new user...");
             const hashedPassword = await bcrypt.hash(password, 10);
             user = await prisma.user.create({
               data: {email, password: hashedPassword},
             });
+            console.log("✅ New user created successfully");
           } else {
+            console.log("🔍 Checking password for existing user...");
             const isPasswordValid = await bcrypt.compare(
               password,
               user.password
             );
-            if (!isPasswordValid) throw new Error("Invalid password");
+            console.log("🔑 Password valid:", isPasswordValid);
+
+            if (!isPasswordValid) {
+              console.log("❌ Password validation failed");
+              throw new Error("Invalid password");
+            }
           }
 
+          console.log("✅ Authentication successful for:", email);
           return {id: user.id.toString(), email: user.email};
         } catch (error) {
-          console.error("Authentication error:", error);
+          console.error("❌ Authentication error:", error);
+          console.error("Error details:", {
+            message: error instanceof Error ? error.message : "Unknown error",
+            stack: error instanceof Error ? error.stack : "No stack trace",
+          });
           return null;
         }
       },
@@ -49,6 +67,13 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
       async profile(profile) {
         try {
           const email = profile.email;
@@ -78,6 +103,10 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET!,
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
   callbacks: {
     // Include user ID in JWT token
     async jwt({token, user}) {
@@ -97,4 +126,6 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
   pages: {
     signIn: "/signin",
   },
+  debug: process.env.NODE_ENV === "development",
+  trustHost: true,
 });
