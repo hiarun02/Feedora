@@ -15,51 +15,40 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
     credentialProvider({
       name: "Credentials",
       credentials: {
-        email: {label: "Email", type: "text"},
+        email: {label: "Email", type: "email"},
         password: {label: "Password", type: "password"},
       },
       authorize: async (credentials) => {
         try {
-          console.log("🔐 Starting authentication process...");
+          if (!credentials?.email || !credentials?.password) {
+            return null;
+          }
 
           const parsedValues = credentialsSchema.parse(credentials);
           const {email, password} = parsedValues;
 
-          console.log("📧 Looking for user with email:", email);
-
           let user = await prisma.user.findUnique({where: {email}});
-          console.log("👤 User found:", user ? "Yes" : "No");
 
           // If user does not exist, create a new one
           if (!user) {
-            console.log("🆕 Creating new user...");
             const hashedPassword = await bcrypt.hash(password, 10);
             user = await prisma.user.create({
               data: {email, password: hashedPassword},
             });
-            console.log("✅ New user created successfully");
           } else {
-            console.log("🔍 Checking password for existing user...");
             const isPasswordValid = await bcrypt.compare(
               password,
               user.password
             );
-            console.log("🔑 Password valid:", isPasswordValid);
 
             if (!isPasswordValid) {
-              console.log("❌ Password validation failed");
-              throw new Error("Invalid password");
+              return null;
             }
           }
 
-          console.log("✅ Authentication successful for:", email);
           return {id: user.id.toString(), email: user.email};
         } catch (error) {
-          console.error("❌ Authentication error:", error);
-          console.error("Error details:", {
-            message: error instanceof Error ? error.message : "Unknown error",
-            stack: error instanceof Error ? error.stack : "No stack trace",
-          });
+          console.error("Authentication error:", error);
           return null;
         }
       },
@@ -77,6 +66,11 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
       async profile(profile) {
         try {
           const email = profile.email;
+
+          if (!email) {
+            throw new Error("No email provided by Google");
+          }
+
           let user = await prisma.user.findUnique({
             where: {email},
           });
@@ -126,6 +120,4 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
   pages: {
     signIn: "/signin",
   },
-  debug: process.env.NODE_ENV === "development",
-  trustHost: true,
 });
