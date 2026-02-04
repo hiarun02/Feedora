@@ -5,6 +5,5 @@ export function middleware() {
 }
 
 export const config = {
-  // Only match API routes if needed in the future
   matcher: [],
 };

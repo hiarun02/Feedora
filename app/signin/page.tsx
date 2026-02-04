@@ -48,6 +48,7 @@ const Signin = () => {
         email,
         password,
         redirect: false,
+        callbackUrl: "/dashboard",
       });
 
       if (response?.error) {
@@ -119,7 +120,7 @@ const Signin = () => {
           </form>
           <Button
             onClick={() => {
-              signIn("google");
+              signIn("google", {callbackUrl: "/dashboard"});
             }}
             variant="outline"
             className="w-full py-2 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed mb-5"

@@ -5,7 +5,7 @@ const Footer = () => {
         <div className="flex justify-center items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center space-x1">
-            <h1 className="">@Feedlyze </h1>
+            <h1 className="">@Feedora </h1>
           </div>
         </div>
       </div>

@@ -1,10 +1,17 @@
 import type {Metadata} from "next";
-import {Geist, Geist_Mono} from "next/font/google";
+import {Geist, Geist_Mono, Poppins} from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AppShell from "@/components/AppShell";
 import {ThemeProvider} from "@/components/theme-provider";
 import AuthProvider from "@/components/AuthProvider";
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,8 +24,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Feedlyze - Collect and Analyze User Feedback Seamlessly",
-  description: "Seamlessly collect and analyze user feedback with Feedlyze.",
+  title: "Feedora - Collect and Analyze User Feedback Seamlessly",
+  description: "Seamlessly collect and analyze user feedback with Feedora.",
 };
 
 export default function RootLayout({
@@ -29,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${poppins.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"
@@ -38,9 +45,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            <Header />
-            {children}
-            <Footer />
+            <AppShell header={<Header />} footer={<Footer />}>
+              {children}
+            </AppShell>
           </AuthProvider>
         </ThemeProvider>
       </body>

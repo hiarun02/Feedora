@@ -20,7 +20,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <div className="mx-auto max-w-6xl py-10">
+    <div id="how-it-works" className="mx-auto max-w-6xl py-10 scroll-mt-24">
       <h2 className="flex justify-center items-center font-extrabold lg:text-4xl text-3xl my-10 mb-20">
         <PointerHighlight>How It Works</PointerHighlight>
       </h2>

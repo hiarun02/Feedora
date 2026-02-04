@@ -14,9 +14,9 @@ export default function Header() {
   const {data: session} = useSession();
 
   const navLinks: Array<{name: string; href: string}> = [
-    {name: "Home", href: "/"},
-    {name: "Docs", href: "/docs"},
-    {name: "Dashboard", href: "/dashboard"},
+    {name: "Features", href: "/#features"},
+    {name: "How It Works", href: "/#how-it-works"},
+    {name: "FAQ", href: "/#faq"},
   ];
 
   return (
@@ -26,34 +26,26 @@ export default function Header() {
           {/* Logo */}
           <div className="flex items-center gap-3">
             <Link href="/" className="inline-flex items-center gap-3">
-              <span className="font-bold">Feedlyze</span>
+              <span className="text-md font-bold">Feedora</span>
             </Link>
           </div>
 
           <div className="hidden md:flex items-center gap-5">
             {/* desktop nav */}
-            <nav className="hidden md:flex items-center gap-8">
-              {session &&
-                navLinks.map((link, i) => (
-                  <Link key={i} href={link.href}>
-                    {link.name}
-                  </Link>
-                ))}
+            <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+              {navLinks.map((link, i) => (
+                <Link key={i} href={link.href}>
+                  {link.name}
+                </Link>
+              ))}
             </nav>
             {/* Desktop CTAs */}
-            {session ? (
-              <div className="flex items-center gap-3">
-                <Button variant="outline" onClick={() => signOut()}>
-                  Logout <LogOutIcon />
-                </Button>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2">
-                <Link href="/signin">
-                  <Button variant="outline">Sign in</Button>
-                </Link>
-              </div>
-            )}
+
+            <div className="flex items-center gap-2 text-sm font-medium">
+              <Link href="/signin">
+                <Button variant="outline">Sign in</Button>
+              </Link>
+            </div>
 
             {/* theme toggle */}
 

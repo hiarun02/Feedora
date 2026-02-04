@@ -9,7 +9,7 @@ const ActionSection = () => {
         Ready to transform your user feedback experience?
       </h2>
       <p className="mt-4  max-w-2xl mx-auto">
-        Join Feedlyze today and start turning feedback into actionable insights!
+        Join Feedora today and start turning feedback into actionable insights!
       </p>
       <div className="flex justify-center mt-8">
         <Link href="/signin">

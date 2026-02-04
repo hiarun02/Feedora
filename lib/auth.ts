@@ -22,12 +22,12 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
         try {
           if (!credentials?.email || !credentials?.password) {
             return null;
-          }
+          } // 
 
           const parsedValues = credentialsSchema.parse(credentials);
           const {email, password} = parsedValues;
 
-          let user = await prisma.user.findUnique({where: {email}});
+          let user = await prisma.user.findUnique({where: {email}}); // 
 
           // If user does not exist, create a new one
           if (!user) {

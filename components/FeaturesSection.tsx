@@ -40,7 +40,10 @@ const FeaturesSection = () => {
     },
   ];
   return (
-    <div className="mx-auto max-w-6xl lg:py-20 py-10 relative">
+    <div
+      id="features"
+      className="mx-auto max-w-6xl lg:py-20 py-10 relative scroll-mt-24"
+    >
       <h2 className="flex justify-center items-center font-extrabold lg:text-4xl text-3xl my-10 lg:mb-25 mb-20">
         <PointerHighlight>Our Features</PointerHighlight>
       </h2>
