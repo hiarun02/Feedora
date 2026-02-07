@@ -2,16 +2,13 @@
 
 import React, {useState} from "react";
 import Link from "next/link";
-import {useSession, signOut} from "next-auth/react";
 
 import {Button} from "./ui/button";
 
 import {ThemeToggle} from "./ThemeToggle";
-import {LogOutIcon} from "lucide-react";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-  const {data: session} = useSession();
 
   const navLinks: Array<{name: string; href: string}> = [
     {name: "Features", href: "/#features"},
@@ -26,7 +23,7 @@ export default function Header() {
           {/* Logo */}
           <div className="flex items-center gap-3">
             <Link href="/" className="inline-flex items-center gap-3">
-              <span className="text-md font-bold">Feedora</span>
+              <span className="text-lg font-bold">Feedora</span>
             </Link>
           </div>
 
@@ -43,19 +40,18 @@ export default function Header() {
 
             <div className="flex items-center gap-2 text-sm font-medium">
               <Link href="/signin">
-                <Button variant="outline">Sign in</Button>
+                <Button variant="outline" className="">
+                  Sign in
+                </Button>
               </Link>
             </div>
 
             {/* theme toggle */}
-
             <ThemeToggle />
           </div>
-
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center gap-3">
             {/* theme toggle */}
-
             <ThemeToggle />
             <button
               onClick={() => setOpen(!open)}
@@ -106,34 +102,20 @@ export default function Header() {
       >
         <div className="px-4 pt-4 pb-6 space-y-4">
           <nav className="flex flex-col gap-3">
-            {session &&
-              navLinks.map((link, i) => (
-                <Link key={i} href={link.href}>
-                  {link.name}
-                </Link>
-              ))}
+            {navLinks.map((link, i) => (
+              <Link key={i} href={link.href}>
+                {link.name}
+              </Link>
+            ))}
           </nav>
-
           <div className="pt-3 border-t border-white/10 flex flex-col gap-3">
-            {session ? (
-              <div className="flex flex-col gap-3">
-                <Button
-                  variant="outline"
-                  onClick={() => signOut()}
-                  className="w-full"
-                >
-                  Logout <LogOutIcon />
+            <div className="flex flex-col gap-3">
+              <Link href="/signin">
+                <Button variant="outline" className="w-full">
+                  Sign in
                 </Button>
-              </div>
-            ) : (
-              <div className="flex flex-col gap-3">
-                <Link href="/signin">
-                  <Button variant="outline" className="w-full">
-                    Sign in
-                  </Button>
-                </Link>
-              </div>
-            )}
+              </Link>
+            </div>
           </div>
         </div>
       </div>

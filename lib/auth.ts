@@ -22,12 +22,12 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
         try {
           if (!credentials?.email || !credentials?.password) {
             return null;
-          } // 
+          } //
 
           const parsedValues = credentialsSchema.parse(credentials);
           const {email, password} = parsedValues;
 
-          let user = await prisma.user.findUnique({where: {email}}); // 
+          let user = await prisma.user.findUnique({where: {email}}); //
 
           // If user does not exist, create a new one
           if (!user) {
@@ -38,7 +38,7 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
           } else {
             const isPasswordValid = await bcrypt.compare(
               password,
-              user.password
+              user.password,
             );
 
             if (!isPasswordValid) {
@@ -46,7 +46,14 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
             }
           }
 
-          return {id: user.id.toString(), email: user.email};
+          const userEmail = user.email ?? email;
+
+          return {
+            id: user.id.toString(),
+            email: userEmail,
+            name: userEmail.split("@")[0],
+            image: null,
+          };
         } catch (error) {
           console.error("Authentication error:", error);
           return null;
@@ -85,9 +92,13 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
             });
           }
 
+          const userEmail = user.email ?? email;
+
           return {
             id: user.id.toString(),
-            email: user.email,
+            email: userEmail,
+            name: profile.name ?? userEmail.split("@")[0],
+            image: profile.picture ?? null,
           };
         } catch (error) {
           console.error("Google authentication error:", error);
@@ -106,6 +117,8 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
     async jwt({token, user}) {
       if (user) {
         token.id = user.id;
+        token.name = user.name;
+        token.picture = user.image;
       }
       return token;
     },
@@ -113,6 +126,8 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
     async session({session, token}) {
       if (token) {
         session.user.id = token.id as string;
+        session.user.name = (token.name as string | null) ?? null;
+        session.user.image = (token.picture as string | null) ?? null;
       }
       return session;
     },

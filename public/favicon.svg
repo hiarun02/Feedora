@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Background -->
+  <circle cx="32" cy="32" r="32" fill="#000000"/>
+  
+  <!-- Feedback icon: speech bubble with dots -->
+  <path d="M20 16h24c2.2 0 4 1.8 4 4v20c0 2.2-1.8 4-4 4h-8l-4 4-4-4h-8c-2.2 0-4-1.8-4-4V20c0-2.2 1.8-4 4-4z" fill="white"/>
+  
+  <!-- Dots inside bubble -->
+  <circle cx="26" cy="32" r="2" fill="#000000"/>
+  <circle cx="32" cy="32" r="2" fill="#000000"/>
+  <circle cx="38" cy="32" r="2" fill="#000000"/>
+</svg>
