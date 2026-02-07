@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 64" width="200" height="64">
+  <!-- Icon -->
+  <circle cx="32" cy="32" r="28" fill="#000000"/>
+  <path d="M20 24h24c1.6 0 3 1.4 3 3v14c0 1.6-1.4 3-3 3h-6l-3 3-3-3h-6c-1.6 0-3-1.4-3-3V27c0-1.6 1.4-3 3-3z" fill="white"/>
+  <circle cx="26" cy="36" r="1.5" fill="#000000"/>
+  <circle cx="32" cy="36" r="1.5" fill="#000000"/>
+  <circle cx="38" cy="36" r="1.5" fill="#000000"/>
+  
+  <!-- Text -->
+  <text x="70" y="45" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#000000">
+    Feedora
+  </text>
+</svg>

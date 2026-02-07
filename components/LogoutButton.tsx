@@ -14,21 +14,24 @@ type LogoutButtonProps = {
     | "secondary"
     | "ghost"
     | "link";
+  showText?: boolean;
 };
 
 export default function LogoutButton({
   className,
   size = "sm",
   variant = "outline",
+  showText = true,
 }: LogoutButtonProps) {
   return (
     <Button
       variant={variant}
       size={size}
-      className={className}
+      className={`flex items-center gap-2 ${className ?? ""}`.trim()}
       onClick={() => signOut({callbackUrl: "/"})}
     >
-      Logout <LogOut />
+      <span className={showText ? "" : "sr-only"}>Logout</span>
+      <LogOut />
     </Button>
   );
 }

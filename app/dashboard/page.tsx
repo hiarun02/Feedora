@@ -1,7 +1,21 @@
+import {Button} from "@/components/ui/button";
+import {FolderDot} from "lucide-react";
+import Link from "next/link";
+
 const DashboardPage = () => {
   return (
-    <div>
-      <h1 className="text-2xl font-bold">Welcome to your Dashboard</h1>
+    <div className="mx-auto flex justify-center max-w-[80%] border rounded-2xl h-[60vh] items-center mt-10 bg-white dark:bg-gray-800">
+      <div className="max-w-sm mt-4 flex flex-col items-center gap-2">
+        <FolderDot size={40} />
+        <p className="text-xl font-semibold">Welcome to Feedora</p>
+
+        <p className="text-center">
+          Get started by creating your first project to collect user feedback.
+        </p>
+        <Link href="/dashboard/projects">
+          <Button variant="default">Create your first project</Button>
+        </Link>
+      </div>
     </div>
   );
 };
