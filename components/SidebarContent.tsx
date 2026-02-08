@@ -105,7 +105,7 @@ export default function SidebarContent() {
             />
             <div className="border-t pt-2 flex justify-end">
               <Button
-                className="w-fit"
+                className="hidden md:inline-flex w-fit"
                 variant="outline"
                 onClick={() => setIsOpen(!isOpen)}
               >
