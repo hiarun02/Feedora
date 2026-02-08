@@ -35,7 +35,7 @@ export default function DashboardHeader() {
 
   return (
     <div className="border-b py-3.5 pr-5 pl-16 md:px-5 bg-white dark:bg-gray-800">
-      <h1 className="text-lg sm:text-center font-semibold">{title}</h1>
+      <h1 className="text-lg font-semibold">{title}</h1>
     </div>
   );
 }
