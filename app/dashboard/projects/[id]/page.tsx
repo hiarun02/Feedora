@@ -2,6 +2,7 @@ import Link from "next/link";
 import {notFound, redirect} from "next/navigation";
 import {ArrowLeft, MessageSquare, Star, ThumbsUp, Users} from "lucide-react";
 import prisma from "@/lib/db";
+import {Prisma} from "@prisma/client";
 import {auth} from "@/lib/auth";
 import ProjectSnippetDialog from "../_components/ProjectSnippetDialog";
 
@@ -70,6 +71,9 @@ export default async function ProjectDetailsPage({
         take: 8,
       }),
     ]);
+
+  const typedFeedbacks =
+    feedbacks as Prisma.FeedbackGetPayload<Prisma.FeedbackDefaultArgs>[];
 
   const totalFeedbacks = feedbackStats._count._all ?? 0;
   const positiveFeedbacks = positiveStats._count._all ?? 0;
@@ -173,7 +177,7 @@ export default async function ProjectDetailsPage({
               </div>
             </div>
             <div className="grid gap-4">
-              {feedbacks.map((feedback) => (
+              {typedFeedbacks.map((feedback) => (
                 <div
                   key={feedback.id}
                   className="rounded-xl border bg-background p-4"
