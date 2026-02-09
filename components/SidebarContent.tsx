@@ -32,7 +32,7 @@ export default function SidebarContent() {
       <button
         type="button"
         onClick={() => setIsMobileOpen(true)}
-        className="md:hidden fixed top-2 left-4 z-50 inline-flex items-center justify-center h-10 w-10 rounded-md border bg-white text-gray-800 shadow-sm dark:bg-gray-900 dark:text-gray-100 "
+        className="md:hidden fixed top-2 left-4 z-50 inline-flex items-center justify-center h-10 w-10 rounded-md border bg-card text-foreground shadow-sm"
         aria-label="Open sidebar"
       >
         <Menu size={18} />
@@ -47,7 +47,7 @@ export default function SidebarContent() {
         aria-hidden={!isMobileOpen}
       />
       <aside
-        className={`border-r h-full flex flex-col transition-all duration-300 bg-white dark:bg-gray-900 z-50 fixed md:static top-0 left-0 ${
+        className={`border-r h-full flex flex-col transition-all duration-300 bg-card text-foreground z-50 fixed md:static top-0 left-0 ${
           isMobileOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 ${isOpen ? "md:w-60" : "md:w-20"} w-60`}
       >
@@ -66,7 +66,7 @@ export default function SidebarContent() {
           <button
             type="button"
             onClick={() => setIsMobileOpen(false)}
-            className="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-md hover:bg-muted"
             aria-label="Close sidebar"
           >
             <X size={18} />
@@ -83,8 +83,8 @@ export default function SidebarContent() {
                     href={link.href}
                     className={`flex items-center font-medium gap-3 p-2 rounded-md transition-all duration-200 ${
                       isActive
-                        ? "bg-gray-900 text-white dark:bg-gray-100 dark:text-black"
-                        : "hover:bg-gray-200 dark:hover:bg-gray-700"
+                        ? "bg-foreground text-background"
+                        : "hover:bg-muted"
                     } ${!isOpen ? "justify-center" : ""}`}
                     title={!isOpen ? link.name : ""}
                   >
