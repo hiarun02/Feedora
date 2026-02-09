@@ -2,7 +2,6 @@ import Link from "next/link";
 import {notFound, redirect} from "next/navigation";
 import {ArrowLeft, MessageSquare, Star, ThumbsUp, Users} from "lucide-react";
 import prisma from "@/lib/db";
-import {Prisma} from "@prisma/client";
 import {auth} from "@/lib/auth";
 import ProjectSnippetDialog from "../_components/ProjectSnippetDialog";
 
@@ -72,8 +71,14 @@ export default async function ProjectDetailsPage({
       }),
     ]);
 
-  const typedFeedbacks =
-    feedbacks as Prisma.FeedbackGetPayload<Prisma.FeedbackDefaultArgs>[];
+  const typedFeedbacks = feedbacks as Array<{
+    id: number;
+    name: string;
+    email: string;
+    rating: number;
+    feedback: string;
+    createdAt: Date;
+  }>;
 
   const totalFeedbacks = feedbackStats._count._all ?? 0;
   const positiveFeedbacks = positiveStats._count._all ?? 0;
