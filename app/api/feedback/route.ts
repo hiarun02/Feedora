@@ -7,8 +7,13 @@ export const runtime = "nodejs";
 const feedbackSchema = z.object({
   projectId: z.number().int().positive(),
   name: z.string().min(1).max(100),
-  email: z.string().email().max(255),
-  rating: z.number().int().min(1).max(5).optional(),
+  email: z.preprocess((value) => {
+    if (typeof value === "string" && value.trim() === "") {
+      return undefined;
+    }
+    return value;
+  }, z.string().email().max(255).optional()),
+  rating: z.number().int().min(0).max(5).optional(),
   feedback: z.string().min(1).max(1000),
 });
 
@@ -63,8 +68,8 @@ export async function POST(request: Request) {
     data: {
       projectid: parsed.data.projectId,
       name: parsed.data.name,
-      email: parsed.data.email,
-      rating: parsed.data.rating ?? 4,
+      email: parsed.data.email ?? null,
+      rating: parsed.data.rating ?? 0,
       feedback: parsed.data.feedback,
     },
   });

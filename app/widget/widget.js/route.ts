@@ -32,11 +32,11 @@ const script = `(function () {
   var header = document.createElement("div");
   header.className = "feedora-widget-header";
   var title = document.createElement("strong");
-  title.textContent = "Feedora Widget";
+  title.textContent = "Share your feedback";
   var closeBtn = document.createElement("button");
   closeBtn.type = "button";
   closeBtn.className = "feedora-widget-close";
-  closeBtn.textContent = "Close";
+  closeBtn.textContent = "x";
   closeBtn.setAttribute("aria-label", "Close feedback widget");
 
   header.appendChild(title);
@@ -44,23 +44,45 @@ const script = `(function () {
 
   var body = document.createElement("div");
   body.innerHTML =
-    "<p class='feedora-widget-subtitle'>Widget connected</p>" +
-    "<p class='feedora-widget-meta'>" +
-    "Project ID: " + (projectId || "not set") + "<br/>" +
-    "API URL: " + (apiUrl || "not set") +
-    "</p>" +
     "<form data-widget-form class='feedora-widget-form'>" +
-    "<input required name='name' placeholder='Your name' />" +
-    "<input required type='email' name='email' placeholder='you@example.com' />" +
-    "<select name='rating'>" +
-    "<option value='5'>5 - Excellent</option>" +
-    "<option value='4' selected>4 - Good</option>" +
-    "<option value='3'>3 - Okay</option>" +
-    "<option value='2'>2 - Poor</option>" +
-    "<option value='1'>1 - Bad</option>" +
+    "<div class='feedora-widget-field'>" +
+    "<span class='feedora-widget-label'>How would you rate your experience?</span>" +
+    "<div class='feedora-widget-stars' role='radiogroup' aria-label='Rating'>" +
+    "<input class='feedora-widget-star-input' type='radio' id='feedora-star-5' name='rating' value='5'/>" +
+    "<label class='feedora-widget-star' for='feedora-star-5' aria-label='5 stars'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M12 2.5l2.95 5.98 6.6.96-4.78 4.65 1.13 6.57L12 17.9l-5.9 3.1 1.13-6.57L2.45 9.44l6.6-.96L12 2.5z'/></svg></label>" +
+    "<input class='feedora-widget-star-input' type='radio' id='feedora-star-4' name='rating' value='4'/>" +
+    "<label class='feedora-widget-star' for='feedora-star-4' aria-label='4 stars'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M12 2.5l2.95 5.98 6.6.96-4.78 4.65 1.13 6.57L12 17.9l-5.9 3.1 1.13-6.57L2.45 9.44l6.6-.96L12 2.5z'/></svg></label>" +
+    "<input class='feedora-widget-star-input' type='radio' id='feedora-star-3' name='rating' value='3'/>" +
+    "<label class='feedora-widget-star' for='feedora-star-3' aria-label='3 stars'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M12 2.5l2.95 5.98 6.6.96-4.78 4.65 1.13 6.57L12 17.9l-5.9 3.1 1.13-6.57L2.45 9.44l6.6-.96L12 2.5z'/></svg></label>" +
+    "<input class='feedora-widget-star-input' type='radio' id='feedora-star-2' name='rating' value='2'/>" +
+    "<label class='feedora-widget-star' for='feedora-star-2' aria-label='2 stars'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M12 2.5l2.95 5.98 6.6.96-4.78 4.65 1.13 6.57L12 17.9l-5.9 3.1 1.13-6.57L2.45 9.44l6.6-.96L12 2.5z'/></svg></label>" +
+    "<input class='feedora-widget-star-input' type='radio' id='feedora-star-1' name='rating' value='1'/>" +
+    "<label class='feedora-widget-star' for='feedora-star-1' aria-label='1 star'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M12 2.5l2.95 5.98 6.6.96-4.78 4.65 1.13 6.57L12 17.9l-5.9 3.1 1.13-6.57L2.45 9.44l6.6-.96L12 2.5z'/></svg></label>" +
+    "</div>" +
+    "</div>" +
+    "<div class='feedora-widget-field'>" +
+    "<label class='feedora-widget-label' for='feedora-feedback'>Feedback</label>" +
+    "<textarea required id='feedora-feedback' name='feedback' rows='4' placeholder='Tell us what you think...'></textarea>" +
+    "</div>" +
+    "<div class='feedora-widget-field'>" +
+    "<label class='feedora-widget-label' for='feedora-category'>Category</label>" +
+    "<select id='feedora-category' name='category'>" +
+    "<option value='' selected>Select a category...</option>" +
+    "<option value='general'>General</option>" +
+    "<option value='bug'>Bug</option>" +
+    "<option value='feature'>Feature request</option>" +
+    "<option value='ui'>UI/UX</option>" +
     "</select>" +
-    "<textarea required name='feedback' rows='3' placeholder='Share your feedback'></textarea>" +
-    "<button type='submit'>Send feedback</button>" +
+    "</div>" +
+    "<div class='feedora-widget-field'>" +
+    "<label class='feedora-widget-label' for='feedora-name'>Name</label>" +
+    "<input required id='feedora-name' name='name' placeholder='e.g., Jane Doe' />" +
+    "</div>" +
+    "<div class='feedora-widget-field'>" +
+    "<label class='feedora-widget-label' for='feedora-email'>Email (Optional)</label>" +
+    "<input id='feedora-email' type='email' name='email' placeholder='you@example.com' />" +
+    "</div>" +
+    "<button type='submit'>Send Feedback</button>" +
     "<p data-status class='feedora-widget-status'></p>" +
     "</form>";
 
@@ -78,24 +100,33 @@ const script = `(function () {
     "}" +
     "#feedora-widget-root > button img { width: 22px; height: 22px; filter: brightness(0) invert(1); }" +
     "#feedora-widget-panel {" +
-    "position: fixed; bottom: 76px; right: 24px; width: 340px; max-width: calc(100vw - 48px);" +
-    "background: #ffffff; color: #0f172a; border-radius: 18px; padding: 18px;" +
-    "box-shadow: 0 22px 60px rgba(15,23,42,0.25); border: 1px solid #e5e7eb; display: none;" +
+    "position: fixed; bottom: 76px; right: 24px; width: 360px; max-width: calc(100vw - 48px);" +
+    "background: #ffffff; color: #0f172a; border-radius: 20px; padding: 20px;" +
+    "box-shadow: 0 24px 60px rgba(15,23,42,0.22); border: 1px solid #e2e8f0; display: none;" +
     "font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;" +
     "}" +
-    ".feedora-widget-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }" +
-    ".feedora-widget-close { background: #f1f5f9; border: none; color: #334155; font-size: 12px; padding: 4px 8px; border-radius: 999px; }" +
-    ".feedora-widget-subtitle { margin: 0 0 6px; font-weight: 600; }" +
-    ".feedora-widget-meta { margin: 0 0 14px; color: #64748b; font-size: 12px; }" +
-    ".feedora-widget-form { display: grid; gap: 10px; }" +
+    ".feedora-widget-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }" +
+    ".feedora-widget-header strong { font-size: 18px; }" +
+    ".feedora-widget-close {" +
+    "background: #f1f5f9; border: none; color: #334155; font-size: 14px; width: 28px; height: 28px;" +
+    "border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; }" +
+    ".feedora-widget-form { display: grid; gap: 12px; }" +
+    ".feedora-widget-field { display: grid; gap: 6px; }" +
+    ".feedora-widget-label { font-size: 13px; font-weight: 600; color: #334155; }" +
     ".feedora-widget-form input, .feedora-widget-form select, .feedora-widget-form textarea {" +
-    "padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 14px;" +
-    "outline: none; }" +
+    "padding: 11px 12px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 14px;" +
+    "outline: none; background: #ffffff; }" +
     ".feedora-widget-form input:focus, .feedora-widget-form select:focus, .feedora-widget-form textarea:focus {" +
-    "border-color: #93c5fd; box-shadow: 0 0 0 3px rgba(147,197,253,0.35); }" +
-    ".feedora-widget-form textarea { resize: vertical; min-height: 88px; }" +
+    "border-color: #94a3b8; box-shadow: 0 0 0 3px rgba(148,163,184,0.25); }" +
+    ".feedora-widget-form textarea { resize: vertical; min-height: 100px; }" +
+    ".feedora-widget-stars { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 6px; }" +
+    ".feedora-widget-star-input { position: absolute; opacity: 0; pointer-events: none; }" +
+    ".feedora-widget-star svg { width: 22px; height: 22px; fill: #e2e8f0; transition: fill 0.15s ease; }" +
+    ".feedora-widget-star:hover svg, .feedora-widget-star:hover ~ .feedora-widget-star svg { fill: #f59e0b; }" +
+    ".feedora-widget-star-input:checked ~ .feedora-widget-star svg { fill: #f59e0b; }" +
+    ".feedora-widget-star-input:focus-visible + .feedora-widget-star { outline: 2px solid #94a3b8; border-radius: 6px; }" +
     ".feedora-widget-form button {" +
-    "background: #2563eb; color: #fff; border: none; border-radius: 999px; padding: 10px 14px; font-size: 14px; }" +
+    "background: #2563eb; color: #fff; border: none; border-radius: 12px; padding: 12px 14px; font-size: 14px; font-weight: 600; }" +
     ".feedora-widget-status { margin: 0; font-size: 12px; color: #64748b; }";
 
   panel.id = "feedora-widget-panel";
@@ -105,6 +136,36 @@ const script = `(function () {
 
   var form = body.querySelector("[data-widget-form]");
   var status = body.querySelector("[data-status]");
+  var emailInput = body.querySelector("input[name='email']");
+  var defaultEmail = "";
+
+  if (scriptEl) {
+    var scriptEmail = scriptEl.getAttribute("data-email");
+    if (scriptEmail) {
+      defaultEmail = scriptEmail;
+    }
+  }
+
+  try {
+    var storedEmail = window.localStorage.getItem("feedora_widget_email");
+    if (storedEmail) {
+      defaultEmail = storedEmail;
+    }
+  } catch (error) {
+    void error;
+  }
+
+  var resetDefaults = function () {
+    if (emailInput && defaultEmail) {
+      emailInput.value = defaultEmail;
+    }
+    if (form) {
+      var ratingInputs = form.querySelectorAll("input[name='rating']");
+      ratingInputs.forEach(function (input) {
+        input.checked = false;
+      });
+    }
+  };
 
   var setStatus = function (message) {
     if (status) {
@@ -113,6 +174,7 @@ const script = `(function () {
   };
 
   if (form) {
+    resetDefaults();
     form.addEventListener("submit", function (event) {
       event.preventDefault();
 
@@ -122,11 +184,13 @@ const script = `(function () {
       }
 
       var formData = new FormData(form);
+      var ratingValue = formData.get("rating");
+      var ratingNumber = ratingValue ? Number(ratingValue) : 0;
       var payload = {
         projectId: Number(projectId),
         name: String(formData.get("name") || ""),
         email: String(formData.get("email") || ""),
-        rating: Number(formData.get("rating") || 4),
+        rating: ratingNumber,
         feedback: String(formData.get("feedback") || ""),
       };
 
@@ -146,6 +210,16 @@ const script = `(function () {
         .then(function () {
           setStatus("Thanks for your feedback!");
           form.reset();
+          if (payload.email) {
+            try {
+              window.localStorage.setItem("feedora_widget_email", payload.email);
+            } catch (error) {
+              void error;
+            }
+            defaultEmail = payload.email;
+          }
+          resetDefaults();
+          togglePanel(false);
         })
         .catch(function () {
           setStatus("Failed to send feedback.");

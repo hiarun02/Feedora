@@ -2,6 +2,7 @@
 
 import {useEffect, useMemo, useState} from "react";
 import {usePathname} from "next/navigation";
+import {ThemeToggle} from "@/components/ThemeToggle";
 
 const titlesByPath: Record<string, string> = {
   "/dashboard": "Dashboard",
@@ -84,8 +85,11 @@ export default function DashboardHeader() {
   const title = dynamicTitle ?? baseTitle;
 
   return (
-    <div className="border-b bg-card text-foreground py-3.5 pr-5 pl-16 md:px-5">
-      <h1 className="text-lg font-semibold">{title}</h1>
+    <div className="border-b bg-card text-foreground py-3 pr-5 pl-16 md:px-5">
+      <div className="flex items-center justify-between">
+        <h1 className="text-lg font-semibold">{title}</h1>
+        <ThemeToggle size="sm" />
+      </div>
     </div>
   );
 }

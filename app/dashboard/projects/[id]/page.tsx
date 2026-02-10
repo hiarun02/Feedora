@@ -4,15 +4,9 @@ import {ArrowLeft, MessageSquare, Star, ThumbsUp, Users} from "lucide-react";
 import prisma from "@/lib/db";
 import {auth} from "@/lib/auth";
 import ProjectSnippetDialog from "../_components/ProjectSnippetDialog";
+import ProjectFeedbackTable from "./_components/ProjectFeedbackTable";
 
 export const runtime = "nodejs";
-
-const formatDate = (value: Date) =>
-  new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  }).format(value);
 
 export default async function ProjectDetailsPage({
   params,
@@ -48,6 +42,7 @@ export default async function ProjectDetailsPage({
     notFound();
   }
 
+  // Fetch feedback stats and recent feedbacks in parallel
   const [feedbackStats, positiveStats, uniqueUsers, feedbacks] =
     await Promise.all([
       prisma.feedback.aggregate({
@@ -74,11 +69,20 @@ export default async function ProjectDetailsPage({
   const typedFeedbacks = feedbacks as Array<{
     id: number;
     name: string;
-    email: string;
+    email: string | null;
     rating: number;
     feedback: string;
     createdAt: Date;
   }>;
+
+  const tableFeedbacks = typedFeedbacks.map((feedback) => ({
+    id: feedback.id,
+    name: feedback.name,
+    email: feedback.email,
+    rating: feedback.rating,
+    feedback: feedback.feedback,
+    createdAt: feedback.createdAt.toISOString(),
+  }));
 
   const totalFeedbacks = feedbackStats._count._all ?? 0;
   const positiveFeedbacks = positiveStats._count._all ?? 0;
@@ -181,32 +185,9 @@ export default async function ProjectDetailsPage({
                 </p>
               </div>
             </div>
-            <div className="grid gap-4">
-              {typedFeedbacks.map((feedback) => (
-                <div
-                  key={feedback.id}
-                  className="rounded-xl border bg-background p-4"
-                >
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <div>
-                      <p className="text-sm font-semibold">{feedback.name}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {feedback.email}
-                      </p>
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      {formatDate(feedback.createdAt)}
-                    </div>
-                  </div>
-                  <div className="mt-2 flex items-center gap-2 text-sm">
-                    <Star className="h-4 w-4 text-amber-500" />
-                    <span className="font-medium">{feedback.rating}</span>
-                  </div>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    {feedback.feedback}
-                  </p>
-                </div>
-              ))}
+            {/* feedback */}
+            <div className="overflow-hidden rounded-2xl border bg-card">
+              <ProjectFeedbackTable feedbacks={tableFeedbacks} />
             </div>
           </div>
         )}
