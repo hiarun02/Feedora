@@ -27,7 +27,7 @@ model Project {
 model Feedback {
   id        Int      @id @default(autoincrement())
   name      String
-  email     String
+  email     String? // Optional email field       
   rating    Int      @default(4)
   feedback  String
   projectid Int
