@@ -55,9 +55,9 @@ export default function RootLayout({
         </ThemeProvider>
         <script
           id="feedora-widget-script"
-          src="http://localhost:3000/widget/widget.js"
+          src="http://feedora.hiarun.me/widget/widget.js"
           data-project-id="14"
-          data-api-url="http://localhost:3000"
+          data-api-url="http://feedora.hiarun.me"
           defer
         ></script>
       </body>
