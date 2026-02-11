@@ -209,7 +209,11 @@ const script = `(function () {
       })
         .then(function (response) {
           if (!response.ok) {
-            throw new Error("Request failed");
+            return response.json().then(function (data) {
+              throw new Error(data.error || "Request failed");
+            }).catch(function () {
+              throw new Error("Request failed");
+            });
           }
           return response.json();
         })
@@ -220,8 +224,8 @@ const script = `(function () {
           resetDefaults();
           togglePanel(false);
         })
-        .catch(function () {
-          setStatus("Failed to send feedback.");
+        .catch(function (error) {
+          setStatus(error.message || "Failed to send feedback.");
         });
     });
   }

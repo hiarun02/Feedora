@@ -6,7 +6,6 @@ import Footer from "@/components/Footer";
 import AppShell from "@/components/AppShell";
 import {ThemeProvider} from "@/components/theme-provider";
 import AuthProvider from "@/components/AuthProvider";
-import WidgetScript from "@/components/WidgetScript";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -32,11 +31,6 @@ export const metadata: Metadata = {
   },
 };
 
-const widgetProjectId = process.env.NEXT_PUBLIC_WIDGET_PROJECT_ID;
-const widgetApiUrl = process.env.NEXT_PUBLIC_API_URL;
-const widgetScriptUrl =
-  process.env.NEXT_PUBLIC_WIDGET_SCRIPT_URL ?? "/widget/widget.js";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -57,18 +51,13 @@ export default function RootLayout({
             <AppShell header={<Header />} footer={<Footer />}>
               {children}
             </AppShell>
-            <WidgetScript
-              projectId={widgetProjectId}
-              apiUrl={widgetApiUrl}
-              scriptUrl={widgetScriptUrl}
-            />
           </AuthProvider>
         </ThemeProvider>
         <script
           id="feedora-widget-script"
-          src="http://feedora.hiarun.me/widget/widget.js"
-          data-project-id="13"
-          data-api-url="http://feedora.hiarun.me"
+          src="http://localhost:3000/widget/widget.js"
+          data-project-id="14"
+          data-api-url="http://localhost:3000"
           defer
         ></script>
       </body>

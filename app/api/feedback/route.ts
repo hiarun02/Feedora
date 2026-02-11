@@ -53,29 +53,51 @@ export async function POST(request: Request) {
     );
   }
 
-  const project = await prisma.project.findUnique({
-    where: {id: parsed.data.projectId},
-  });
+  try {
+    const project = await prisma.project.findUnique({
+      where: {id: parsed.data.projectId},
+    });
 
-  if (!project) {
-    return NextResponse.json(
-      {error: "Project not found"},
-      {status: 404, headers: getCorsHeaders(origin)},
-    );
-  }
+    if (!project) {
+      return NextResponse.json(
+        {error: "Project not found"},
+        {status: 404, headers: getCorsHeaders(origin)},
+      );
+    }
 
-  const created = await prisma.feedback.create({
-    data: {
+    const feedbackData: {
+      projectid: number;
+      name: string;
+      email: string | null;
+      rating?: number;
+      feedback: string;
+    } = {
       projectid: parsed.data.projectId,
       name: parsed.data.name,
       email: parsed.data.email ?? null,
-      rating: parsed.data.rating ?? 0,
       feedback: parsed.data.feedback,
-    },
-  });
+    };
 
-  return NextResponse.json(
-    {feedback: created},
-    {status: 201, headers: getCorsHeaders(origin)},
-  );
+    if (parsed.data.rating !== undefined && parsed.data.rating > 0) {
+      feedbackData.rating = parsed.data.rating;
+    }
+
+    const created = await prisma.feedback.create({
+      data: feedbackData,
+    });
+
+    return NextResponse.json(
+      {feedback: created},
+      {status: 201, headers: getCorsHeaders(origin)},
+    );
+  } catch (error) {
+    console.error("Feedback creation error:", error);
+    return NextResponse.json(
+      {
+        error: "Failed to create feedback",
+        details: error instanceof Error ? error.message : "Unknown error",
+      },
+      {status: 500, headers: getCorsHeaders(origin)},
+    );
+  }
 }
