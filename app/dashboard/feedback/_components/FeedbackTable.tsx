@@ -1,6 +1,6 @@
 "use client";
 
-import {Eye, Star} from "lucide-react";
+import {Eye, MoreHorizontal, Star, Trash2} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {
   Dialog,
@@ -10,8 +10,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-type FeedbackRow = {
+export type FeedbackRow = {
   id: number;
   name: string;
   email: string | null;
@@ -40,7 +46,17 @@ const renderStars = (rating: number) =>
     />
   ));
 
-export default function FeedbackTable({feedbacks}: {feedbacks: FeedbackRow[]}) {
+export default function FeedbackTable({
+  feedbacks,
+  emptyMessage = "No feedback yet.",
+  onDelete,
+  deletingId,
+}: {
+  feedbacks: FeedbackRow[];
+  emptyMessage?: string;
+  onDelete?: (id: number) => void;
+  deletingId?: number | null;
+}) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-left text-sm">
@@ -48,8 +64,8 @@ export default function FeedbackTable({feedbacks}: {feedbacks: FeedbackRow[]}) {
           <tr>
             <th className="px-6 py-4">User</th>
             <th className="px-6 py-4">Feedback</th>
+            <th className="px-6 py-4">Project</th>
             <th className="px-6 py-4">Rating</th>
-            <th className="px-6 py-4">Sentiment</th>
             <th className="px-6 py-4">Date</th>
             <th className="px-6 py-4 text-right">Actions</th>
           </tr>
@@ -61,7 +77,7 @@ export default function FeedbackTable({feedbacks}: {feedbacks: FeedbackRow[]}) {
                 colSpan={6}
                 className="px-6 py-10 text-center text-sm text-muted-foreground"
               >
-                No feedback yet.
+                {emptyMessage}
               </td>
             </tr>
           ) : (
@@ -86,6 +102,9 @@ export default function FeedbackTable({feedbacks}: {feedbacks: FeedbackRow[]}) {
                   <td className="px-6 py-4 text-muted-foreground">
                     {feedback.feedback}
                   </td>
+                  <td className="px-6 py-4 font-medium text-foreground">
+                    {feedback.projectName}
+                  </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-1">
                       {renderStars(feedback.rating)}
@@ -96,12 +115,34 @@ export default function FeedbackTable({feedbacks}: {feedbacks: FeedbackRow[]}) {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <Dialog>
-                      <DialogTrigger asChild>
-                        <Button variant="ghost" size="sm">
-                          <Eye className="h-4 w-4" />
-                          View
-                        </Button>
-                      </DialogTrigger>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon">
+                            <MoreHorizontal className="h-4 w-4" />
+                            <span className="sr-only">Open actions</span>
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DialogTrigger asChild>
+                            <DropdownMenuItem>
+                              <Eye className="h-4 w-4" />
+                              View
+                            </DropdownMenuItem>
+                          </DialogTrigger>
+                          {onDelete ? (
+                            <DropdownMenuItem
+                              variant="destructive"
+                              disabled={deletingId === feedback.id}
+                              onSelect={() => onDelete(feedback.id)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                              {deletingId === feedback.id
+                                ? "Deleting..."
+                                : "Delete"}
+                            </DropdownMenuItem>
+                          ) : null}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                       <DialogContent className="sm:max-w-xl">
                         <DialogHeader>
                           <DialogTitle>Feedback details</DialogTitle>

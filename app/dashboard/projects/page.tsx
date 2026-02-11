@@ -236,7 +236,7 @@ export default function DashboardProjectsPage() {
     <Dialog open={open} onOpenChange={setOpen}>
       <div className="mx-auto max-w-[95%]">
         {/* project header section */}
-        <div className="flex justify-between items-center gap-10 mt-5 bg-card p-8 rounded-2xl">
+        <div className="flex justify-between border items-center gap-10 mt-5 bg-card p-8 rounded-2xl">
           <div>
             <h1 className="text-2xl font-bold">Projects</h1>
             <p className="text-sm">
@@ -322,7 +322,7 @@ export default function DashboardProjectsPage() {
                         <DialogClose asChild>
                           <Button
                             variant="ghost"
-                            className="w-full justify-start text-red-600 hover:text-red-600"
+                            className="w-full justify-start"
                             onClick={() => openDeleteDialog(project)}
                           >
                             Delete project

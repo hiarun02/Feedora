@@ -90,6 +90,7 @@ const script = `(function () {
   panel.appendChild(body);
 
   var styles = document.createElement("style");
+  styles.id = "feedora-widget-styles";
   styles.textContent =
     "#feedora-widget-root { position: fixed; bottom: 24px; right: 24px; z-index: 2147483647; }" +
     "#feedora-widget-root button { cursor: pointer; }" +
@@ -146,18 +147,9 @@ const script = `(function () {
     }
   }
 
-  try {
-    var storedEmail = window.localStorage.getItem("feedora_widget_email");
-    if (storedEmail) {
-      defaultEmail = storedEmail;
-    }
-  } catch (error) {
-    void error;
-  }
-
   var resetDefaults = function () {
-    if (emailInput && defaultEmail) {
-      emailInput.value = defaultEmail;
+    if (emailInput) {
+      emailInput.value = defaultEmail || "";
     }
     if (form) {
       var ratingInputs = form.querySelectorAll("input[name='rating']");
@@ -186,12 +178,26 @@ const script = `(function () {
       var formData = new FormData(form);
       var ratingValue = formData.get("rating");
       var ratingNumber = ratingValue ? Number(ratingValue) : 0;
+      var nameValue = String(formData.get("name") || "").trim();
+      var feedbackValue = String(formData.get("feedback") || "").trim();
+      var emailValue = String(formData.get("email") || "").trim();
+
+      if (!nameValue || !feedbackValue) {
+        setStatus("Name and feedback are required.");
+        return;
+      }
+
+      if (!ratingNumber) {
+        setStatus("Please select a star rating.");
+        return;
+      }
+
       var payload = {
         projectId: Number(projectId),
-        name: String(formData.get("name") || ""),
-        email: String(formData.get("email") || ""),
+        name: nameValue,
+        email: emailValue || undefined,
         rating: ratingNumber,
-        feedback: String(formData.get("feedback") || ""),
+        feedback: feedbackValue,
       };
 
       setStatus("Sending...");
@@ -210,14 +216,7 @@ const script = `(function () {
         .then(function () {
           setStatus("Thanks for your feedback!");
           form.reset();
-          if (payload.email) {
-            try {
-              window.localStorage.setItem("feedora_widget_email", payload.email);
-            } catch (error) {
-              void error;
-            }
-            defaultEmail = payload.email;
-          }
+          defaultEmail = scriptEl ? scriptEl.getAttribute("data-email") || "" : "";
           resetDefaults();
           togglePanel(false);
         })
