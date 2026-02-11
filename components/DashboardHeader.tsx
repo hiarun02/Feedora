@@ -85,7 +85,7 @@ export default function DashboardHeader() {
   const title = dynamicTitle ?? baseTitle;
 
   return (
-    <div className="border-b bg-card text-foreground py-3 pr-5 pl-16 md:px-5">
+    <div className="sticky top-0 z-20 border-b bg-card text-foreground py-3 pr-5 pl-16 md:px-5">
       <div className="flex items-center justify-between">
         <h1 className="text-lg font-semibold">{title}</h1>
         <ThemeToggle size="sm" />

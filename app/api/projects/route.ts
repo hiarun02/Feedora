@@ -36,10 +36,6 @@ export async function POST(request: Request) {
 
   const userId = Number(session.user.id);
 
-  if (!Number.isInteger(userId)) {
-    return NextResponse.json({error: "Invalid user session"}, {status: 400});
-  }
-
   const project = await prisma.project.create({
     data: {
       ...parsed.data,
@@ -59,10 +55,6 @@ export async function GET() {
   }
 
   const userId = Number(session.user.id);
-
-  if (!Number.isInteger(userId)) {
-    return NextResponse.json({error: "Invalid user session"}, {status: 400});
-  }
 
   const projects = await prisma.project.findMany({
     where: {userId},

@@ -24,10 +24,6 @@ export async function GET(
 
   const userId = Number(session.user.id);
 
-  if (!Number.isInteger(userId)) {
-    return NextResponse.json({error: "Invalid user session"}, {status: 400});
-  }
-
   const {id} = await params;
   const projectId = Number(id);
 
@@ -78,10 +74,6 @@ export async function PATCH(
 
   const userId = Number(session.user.id);
 
-  if (!Number.isInteger(userId)) {
-    return NextResponse.json({error: "Invalid user session"}, {status: 400});
-  }
-
   const {id} = await params;
   const projectId = Number(id);
 
@@ -120,10 +112,6 @@ export async function DELETE(
   }
 
   const userId = Number(session.user.id);
-
-  if (!Number.isInteger(userId)) {
-    return NextResponse.json({error: "Invalid user session"}, {status: 400});
-  }
 
   const {id} = await params;
   const projectId = Number(id);
