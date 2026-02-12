@@ -23,7 +23,7 @@ CREATE TABLE "Project" (
 CREATE TABLE "Feedback" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
+    "email" TEXT,
     "rating" INTEGER NOT NULL DEFAULT 4,
     "feedback" TEXT NOT NULL,
     "projectid" INTEGER NOT NULL,

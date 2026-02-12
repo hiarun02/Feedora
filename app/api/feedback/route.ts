@@ -65,22 +65,13 @@ export async function POST(request: Request) {
       );
     }
 
-    const feedbackData: {
-      projectid: number;
-      name: string;
-      email: string | null;
-      rating?: number;
-      feedback: string;
-    } = {
+    const feedbackData = {
       projectid: parsed.data.projectId,
       name: parsed.data.name,
       email: parsed.data.email ?? null,
+      rating: parsed.data.rating ?? 4,
       feedback: parsed.data.feedback,
     };
-
-    if (parsed.data.rating !== undefined && parsed.data.rating > 0) {
-      feedbackData.rating = parsed.data.rating;
-    }
 
     const created = await prisma.feedback.create({
       data: feedbackData,
