@@ -50,23 +50,24 @@ export default function WidgetScript({
       WIDGET_SCRIPT_ID,
     ) as HTMLScriptElement | null;
 
+    // Auto-detect URLs if not provided
+    const finalScriptUrl =
+      scriptUrl ?? `${window.location.origin}/widget/widget.js`;
+    const finalApiUrl = apiUrl ?? window.location.origin;
+
     if (existingScript) {
       existingScript.setAttribute("data-project-id", projectId);
-      if (apiUrl) {
-        existingScript.setAttribute("data-api-url", apiUrl);
-      }
+      existingScript.setAttribute("data-api-url", finalApiUrl);
       return cleanup;
     }
 
     const script = document.createElement("script");
     script.id = WIDGET_SCRIPT_ID;
-    script.src = scriptUrl ?? "/widget/widget.js";
+    script.src = finalScriptUrl;
     script.async = true;
     script.defer = true;
     script.setAttribute("data-project-id", projectId);
-    if (apiUrl) {
-      script.setAttribute("data-api-url", apiUrl);
-    }
+    script.setAttribute("data-api-url", finalApiUrl);
     document.body.appendChild(script);
 
     return cleanup;

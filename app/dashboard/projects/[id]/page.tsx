@@ -11,7 +11,7 @@ export const runtime = "nodejs";
 export default async function ProjectDetailsPage({
   params,
 }: {
-  params: {id: string};
+  params: Promise<{id: string}>;
 }) {
   const session = await auth();
 
@@ -25,7 +25,8 @@ export default async function ProjectDetailsPage({
     redirect("/signin");
   }
 
-  const projectId = Number(params.id);
+  const {id} = await params;
+  const projectId = Number(id);
 
   if (!Number.isInteger(projectId)) {
     notFound();
