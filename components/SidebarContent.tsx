@@ -32,7 +32,7 @@ export default function SidebarContent() {
       <button
         type="button"
         onClick={() => setIsMobileOpen(true)}
-        className="md:hidden fixed top-2 left-4 z-50 inline-flex items-center justify-center h-10 w-10 rounded-md border bg-card text-foreground shadow-sm"
+        className="md:hidden fixed top-2 left-4 z-50 inline-flex items-center justify-center h-10 w-10 rounded-md border bg-card text-foreground"
         aria-label="Open sidebar"
       >
         <Menu size={18} />
