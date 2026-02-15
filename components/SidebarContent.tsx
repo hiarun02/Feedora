@@ -14,7 +14,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import {Button} from "@/components/ui/button";
-import LogoutButton from "@/components/LogoutButton";
+import {ThemeToggle} from "@/components/ThemeToggle";
 
 export default function SidebarContent() {
   const [isOpen, setIsOpen] = useState(true);
@@ -38,7 +38,7 @@ export default function SidebarContent() {
         <Menu size={18} />
       </button>
       <div
-        className={`md:hidden fixed inset-0 z-40 bg-black/40 transition-opacity duration-200 ${
+        className={`md:hidden fixed inset-0 z-40 bg-black transition-opacity duration-200 ${
           isMobileOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
@@ -97,12 +97,7 @@ export default function SidebarContent() {
           </ul>
           {/* bottom section */}
           <div className="flex flex-col gap-2">
-            <LogoutButton
-              variant="default"
-              size={isOpen ? "sm" : "icon"}
-              showText={isOpen}
-              className={isOpen ? "" : "w-10"}
-            />
+            <ThemeToggle showLabel={isOpen} />
             <div className="border-t pt-2 flex justify-end">
               <Button
                 className="hidden md:inline-flex w-fit"

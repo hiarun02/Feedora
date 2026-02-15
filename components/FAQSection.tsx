@@ -30,12 +30,12 @@ export function FAQSection() {
   return (
     <div
       id="faq"
-      className="mx-auto max-w-6xl lg:py-20 py-10 px-5 scroll-mt-24"
+      className="mx-auto max-w-6xl lg:py-20 py-10 px-4 sm:px-6 lg:px-8 scroll-mt-24"
     >
-      <h2 className="text-center font-extrabold lg:text-4xl text-3xl my-10 mb-20">
+      <h2 className="text-center font-extrabold lg:text-4xl text-3xl my-10 lg:mb-20 mb-16">
         Frequently Asked Questions
       </h2>
-      <Accordion type="single" collapsible className="w-[70vw] mx-auto">
+      <Accordion type="single" collapsible className="w-full max-w-3xl mx-auto">
         {faqs.map((faq) => (
           <AccordionItem value={faq.id} key={faq.id}>
             <AccordionTrigger className="text-left font-medium lg:text-lg text-base">

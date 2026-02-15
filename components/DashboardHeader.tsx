@@ -2,7 +2,11 @@
 
 import {useEffect, useMemo, useState} from "react";
 import {usePathname} from "next/navigation";
-import {ThemeToggle} from "@/components/ThemeToggle";
+import {useSession} from "next-auth/react";
+import {User} from "lucide-react";
+import {Button} from "@/components/ui/button";
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
+import LogoutButton from "@/components/LogoutButton";
 
 const titlesByPath: Record<string, string> = {
   "/dashboard": "Dashboard",
@@ -20,6 +24,7 @@ function toTitleCase(value: string) {
 export default function DashboardHeader() {
   const pathname = usePathname();
   const [dynamicTitle, setDynamicTitle] = useState<string | null>(null);
+  const {data: session} = useSession();
 
   const {baseTitle, projectId} = useMemo(() => {
     if (!pathname) {
@@ -88,7 +93,41 @@ export default function DashboardHeader() {
     <div className="sticky top-0 z-20 border-b bg-card text-foreground py-3 pr-5 pl-16 md:px-5">
       <div className="flex items-center justify-between">
         <h1 className="text-lg font-semibold">{title}</h1>
-        <ThemeToggle size="sm" />
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              className="rounded-full"
+              title="User profile"
+            >
+              <User size={18} />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent align="end" className="w-80">
+            {session?.user && (
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">
+                      Name
+                    </p>
+                    <p className="text-base font-semibold">
+                      {session.user.name}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">
+                      Email
+                    </p>
+                    <p className="text-base">{session.user.email}</p>
+                  </div>
+                </div>
+                <LogoutButton variant="default" className="w-full" />
+              </div>
+            )}
+          </PopoverContent>
+        </Popover>
       </div>
     </div>
   );

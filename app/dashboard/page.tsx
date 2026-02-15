@@ -80,7 +80,7 @@ const DashboardPage = async () => {
   const hasProjects = totalProjects > 0;
 
   return (
-    <div className="p-8">
+    <div className="p-5">
       {/* Welcome Section */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-2">
@@ -168,7 +168,7 @@ const DashboardPage = async () => {
                   {recentFeedbacks.slice(0, 3).map((feedback) => (
                     <div
                       key={feedback.id}
-                      className="flex items-start gap-4 p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition"
+                      className="flex items-start gap-4 p-4 rounded-lg bg-muted hover:bg-muted transition"
                     >
                       {/* Avatar */}
                       <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-sm">
@@ -238,7 +238,7 @@ const DashboardPage = async () => {
                     href={`/dashboard/projects/${project.id}`}
                     className="block"
                   >
-                    <div className="flex justify-between items-center p-3 rounded-lg hover:bg-muted/50 transition">
+                    <div className="flex justify-between items-center p-3 rounded-lg hover:bg-muted transition">
                       <div>
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center text-white font-bold">
