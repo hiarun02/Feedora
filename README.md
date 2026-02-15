@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Feedora
 
-## Getting Started
+Feedora is a simple and powerful feedback collection platform that helps businesses capture and manage user feedback efficiently.
 
-First, run the development server:
+## About Feedora
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Feedora makes it easy for businesses to collect valuable insights from their users. With a lightweight embedding widget and intuitive dashboard, companies can gather feedback, categorize responses, and turn ideas into improvements.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Problem We Solve
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Many businesses struggle to collect structured feedback from users efficiently. Feedora solves this by providing:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- A simple embed solution that requires minimal code
+- Centralized feedback management dashboard
+- Quick categorization and organization of feedback
+- Easy data export for analysis
+- A secure and reliable platform for handling user data
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js 14 - React framework for production
+- TypeScript - Type-safe development
+- Tailwind CSS - Utility-first CSS framework
+- Prisma ORM - Database management and migrations
+- NextAuth.js - Authentication and authorization
+- Radix UI / shadcn/ui - Component library
+- Lucide React - Icon library
+- PostgreSQL - Database
