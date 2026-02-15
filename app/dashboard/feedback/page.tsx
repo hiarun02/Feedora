@@ -52,7 +52,7 @@ export default async function DashboardFeedbackPage() {
   const hasFeedback = tableFeedbacks.length > 0;
 
   return (
-    <div className="mx-auto max-w-[95%] pb-10">
+    <div className="mx-auto max-w-[95%] pb-8 relative">
       <div className="flex items-center border justify-between gap-10 mt-5 bg-card p-8 rounded-2xl">
         <div>
           <h1 className="text-2xl font-bold">Feedback Inbox</h1>

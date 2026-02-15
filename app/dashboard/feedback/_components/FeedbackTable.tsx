@@ -100,7 +100,8 @@ export default function FeedbackTable({
                     </div>
                   </td>
                   <td className="px-6 py-4 text-muted-foreground">
-                    {feedback.feedback}
+                    {feedback.feedback.slice(0, 50) +
+                      (feedback.feedback.length > 50 ? "..." : "")}
                   </td>
                   <td className="px-6 py-4 font-medium text-foreground">
                     {feedback.projectName}

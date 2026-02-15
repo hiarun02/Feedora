@@ -45,7 +45,6 @@ const DashboardPage = async () => {
   const oneWeekAgo = new Date();
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
-  //
   const weeklyProjects = user.Projects.filter(
     (p) => new Date(p.createdAt) > oneWeekAgo,
   ).length;
@@ -180,7 +179,8 @@ const DashboardPage = async () => {
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-sm">{feedback.name}</p>
                         <p className="text-sm mt-1 break-words">
-                          {feedback.feedback}
+                          {feedback.feedback.slice(0, 50) +
+                            (feedback.feedback.length > 50 ? "..." : "")}
                         </p>
                         <div className="flex items-center gap-2 mt-2">
                           <div className="flex gap-0.5">
@@ -254,7 +254,7 @@ const DashboardPage = async () => {
                         </div>
                       </div>
                       <span className="text-xs px-2 py-1 rounded-full bg-muted text-muted-foreground">
-                        Active
+                        {project.Feedbacks.length ? "Active" : "unactive"}
                       </span>
                     </div>
                   </Link>
@@ -264,6 +264,7 @@ const DashboardPage = async () => {
           </div>
         </>
       ) : (
+        // No projects yet
         <div className="mx-auto flex justify-center max-w-[95%] border rounded-2xl h-[60vh] items-center mt-10 bg-card">
           <div className="max-w-sm mt-4 flex flex-col items-center gap-2">
             <BarChart3 size={40} />
