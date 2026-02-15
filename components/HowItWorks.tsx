@@ -20,21 +20,28 @@ const HowItWorks = () => {
   ];
 
   return (
-    <div id="how-it-works" className="mx-auto max-w-6xl py-10 scroll-mt-24">
-      <h2 className="flex justify-center items-center font-extrabold lg:text-4xl text-3xl my-10 mb-20">
+    <div
+      id="how-it-works"
+      className="mx-auto max-w-6xl lg:py-10 py-10 scroll-mt-24 px-4 sm:px-6 lg:px-8"
+    >
+      <h2 className="flex justify-center items-center font-extrabold lg:text-4xl text-3xl my-10 lg:mb-20 mb-16">
         <PointerHighlight>How It Works</PointerHighlight>
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {steps.map((step, index) => (
           <div
             key={index}
-            className="border p-4 rounded-lg shadow flex flex-col items-center text-center"
+            className="relative flex flex-col items-center text-center group"
           >
-            <div className="w-10 h-10 flex items-center justify-center bg-black text-white dark:bg-white dark:text-black rounded-full mb-4 font-extrabold">
+            {/* Connector line */}
+
+            <div className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-primary to-primary text-white dark:text-black rounded-full mb-6 font-bold text-lg shadow-lg group-hover:shadow-xl transition-shadow">
               {step.step}
             </div>
-            <h3 className="font-bold">{step.title}</h3>
-            <p>{step.description}</p>
+            <h3 className="font-bold text-lg mb-2">{step.title}</h3>
+            <p className="text-muted-foreground leading-relaxed">
+              {step.description}
+            </p>
           </div>
         ))}
       </div>

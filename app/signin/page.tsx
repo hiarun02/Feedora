@@ -69,7 +69,7 @@ const Signin = () => {
       <section className="h-screen flex flex-col justify-center px-5">
         <div className="mx-auto border-1 shadow-2xs rounded-2xl w-full max-w-lg px-10 py-5">
           {/* header */}
-          <div className="px-10 py-5 text-center border-b">
+          <div className="px-10 py-5 text-center ">
             <h2>Sign In & Sign Up to Your Account</h2>
           </div>
           <form className="" onSubmit={handleSubmit}>

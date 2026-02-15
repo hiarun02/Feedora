@@ -28,7 +28,7 @@ export const Cover = ({
         const numberOfBeams = Math.floor(height / 10); // Adjust the divisor to control the spacing
         const positions = Array.from(
           {length: numberOfBeams},
-          (_, i) => (i + 1) * (height / (numberOfBeams + 1))
+          (_, i) => (i + 1) * (height / (numberOfBeams + 1)),
         );
         setBeamPositions(positions);
       }
@@ -46,7 +46,7 @@ export const Cover = ({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       ref={ref}
-      className="relative hover:bg-neutral-900  group/cover inline-block dark:bg-neutral-900 bg-neutral-100 px-2 py-2  transition duration-200 rounded-sm"
+      className="relative group/cover inline-block dark:bg-neutral-900 bg-neutral-100 px-2 py-2 transition duration-200 rounded-sm hover:bg-neutral-900 dark:hover:bg-neutral-900"
     >
       <AnimatePresence>
         {hovered && (
@@ -139,8 +139,8 @@ export const Cover = ({
           },
         }}
         className={cn(
-          "dark:text-white inline-block text-neutral-900 relative z-20 group-hover/cover:text-white transition duration-200",
-          className
+          "dark:text-white text-gray-900 inline-block relative z-20 group-hover/cover:text-white transition duration-200",
+          className,
         )}
       >
         {children}
@@ -202,11 +202,11 @@ export const Beam = ({
             y2: 0,
           }}
           transition={{
-            duration: hovered ? 0.5 : duration ?? 2,
+            duration: hovered ? 0.5 : (duration ?? 2),
             ease: "linear",
             repeat: Infinity,
             delay: hovered ? Math.random() * (1 - 0.2) + 0.2 : 0,
-            repeatDelay: hovered ? Math.random() * (2 - 1) + 1 : delay ?? 1,
+            repeatDelay: hovered ? Math.random() * (2 - 1) + 1 : (delay ?? 1),
           }}
         >
           <stop stopColor="#2EB9DF" stopOpacity="0" />
@@ -223,7 +223,7 @@ export const CircleIcon = ({className}: {className?: string}) => {
     <div
       className={cn(
         `pointer-events-none animate-pulse group-hover/cover:hidden group-hover/cover:opacity-100 group h-2 w-2 rounded-full bg-neutral-600 dark:bg-white opacity-20 group-hover/cover:bg-white`,
-        className
+        className,
       )}
     ></div>
   );

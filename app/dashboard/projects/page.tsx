@@ -236,9 +236,9 @@ export default function DashboardProjectsPage() {
     <Dialog open={open} onOpenChange={setOpen}>
       <div className="mx-auto max-w-[95%]">
         {/* project header section */}
-        <div className="flex justify-between border items-center gap-10 mt-5 bg-card p-8 rounded-2xl">
+        <div className="flex lg:justify-between lg:flex-row flex-col border lg:items-center gap-3 lg:gap-10 mt-5 bg-card p-3 lg:p-8 rounded-2xl">
           <div>
-            <h1 className="text-2xl font-bold">Projects</h1>
+            <h1 className="text-2xl font-bold ">Projects</h1>
             <p className="text-sm">
               Manage and monitor all your feedback collection projects.
             </p>

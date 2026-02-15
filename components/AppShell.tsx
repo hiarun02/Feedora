@@ -4,7 +4,7 @@ import {usePathname} from "next/navigation";
 
 type AppShellProps = {
   children: React.ReactNode;
-  header: React.ReactNode;
+  header?: React.ReactNode;
   footer: React.ReactNode;
 };
 
