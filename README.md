@@ -5,7 +5,7 @@ Feedora is a simple and powerful feedback collection platform that helps busines
 ## About Feedora
 
 Feedora makes it easy for businesses to collect valuable insights from their users. With a lightweight embedding widget and intuitive dashboard, companies can gather feedback, categorize responses, and turn ideas into improvements.
-
+<img width="3600" height="2025" alt="screenshot-studio-1771225746879" src="https://github.com/user-attachments/assets/b3670c62-5ae1-42fb-86fd-45b46147a7db" />
 ## Problem We Solve
 
 Many businesses struggle to collect structured feedback from users efficiently. Feedora solves this by providing:
