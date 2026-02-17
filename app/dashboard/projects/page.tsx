@@ -59,8 +59,14 @@ export default function DashboardProjectsPage() {
       const response = await fetch("/api/projects");
 
       if (!response.ok) {
-        const data = (await response.json()) as {error?: string};
-        throw new Error(data.error ?? "Failed to load projects");
+        let errorMessage = "Failed to load projects";
+        try {
+          const data = (await response.json()) as {error?: string};
+          errorMessage = data.error ?? errorMessage;
+        } catch {
+          // Response is not valid JSON, use default message
+        }
+        throw new Error(errorMessage);
       }
 
       const data = (await response.json()) as {
@@ -114,8 +120,14 @@ export default function DashboardProjectsPage() {
       });
 
       if (!response.ok) {
-        const data = (await response.json()) as {error?: string};
-        throw new Error(data.error ?? "Failed to create project");
+        let errorMessage = "Failed to create project";
+        try {
+          const data = (await response.json()) as {error?: string};
+          errorMessage = data.error ?? errorMessage;
+        } catch {
+          // Response is not valid JSON, use default message
+        }
+        throw new Error(errorMessage);
       }
 
       setName("");
@@ -184,8 +196,12 @@ export default function DashboardProjectsPage() {
       });
 
       if (!response.ok) {
-        const data = (await response.json()) as {error?: string};
-        throw new Error(data.error ?? "Failed to update project");
+        let errorMessage = "Failed to update project";
+        try {
+          const data = (await response.json()) as {error?: string};
+          errorMessage = data.error ?? errorMessage;
+        } catch {}
+        throw new Error(errorMessage);
       }
 
       setEditOpen(false);
@@ -215,8 +231,14 @@ export default function DashboardProjectsPage() {
       });
 
       if (!response.ok) {
-        const data = (await response.json()) as {error?: string};
-        throw new Error(data.error ?? "Failed to delete project");
+        let errorMessage = "Failed to delete project";
+        try {
+          const data = (await response.json()) as {error?: string};
+          errorMessage = data.error ?? errorMessage;
+        } catch {
+          // Response is not valid JSON, use default message
+        }
+        throw new Error(errorMessage);
       }
 
       setDeleteOpen(false);
@@ -259,7 +281,7 @@ export default function DashboardProjectsPage() {
         ) : loadError ? (
           <div className="mx-auto flex flex-col justify-center border rounded-2xl h-[60vh] items-center mt-5 bg-card gap-3">
             <p className="text-sm text-red-500">{loadError}</p>
-            <Button type="button" variant="secondary" onClick={fetchProjects}>
+            <Button variant="default" onClick={() => void fetchProjects()}>
               Retry
             </Button>
           </div>

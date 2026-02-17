@@ -27,25 +27,33 @@ export async function DELETE(
     return NextResponse.json({error: "Invalid feedback id"}, {status: 400});
   }
 
-  const feedback = await prisma.feedback.findUnique({
-    where: {id: feedbackId},
-    select: {id: true, projectid: true},
-  });
+  try {
+    const feedback = await prisma.feedback.findUnique({
+      where: {id: feedbackId},
+      select: {id: true, projectid: true},
+    });
 
-  if (!feedback) {
-    return NextResponse.json({error: "Feedback not found"}, {status: 404});
+    if (!feedback) {
+      return NextResponse.json({error: "Feedback not found"}, {status: 404});
+    }
+
+    const project = await prisma.project.findFirst({
+      where: {id: feedback.projectid, userId},
+      select: {id: true},
+    });
+
+    if (!project) {
+      return NextResponse.json({error: "Forbidden"}, {status: 403});
+    }
+
+    await prisma.feedback.delete({where: {id: feedbackId}});
+
+    return NextResponse.json({success: true});
+  } catch (error) {
+    console.error("Failed to delete feedback:", error);
+    return NextResponse.json(
+      {error: "Failed to delete feedback"},
+      {status: 500},
+    );
   }
-
-  const project = await prisma.project.findFirst({
-    where: {id: feedback.projectid, userId},
-    select: {id: true},
-  });
-
-  if (!project) {
-    return NextResponse.json({error: "Forbidden"}, {status: 403});
-  }
-
-  await prisma.feedback.delete({where: {id: feedbackId}});
-
-  return NextResponse.json({success: true});
 }
