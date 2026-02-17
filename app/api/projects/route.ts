@@ -15,6 +15,7 @@ export async function POST(request: Request) {
   const session = await auth();
 
   if (!session?.user?.id) {
+    console.error("No user ID in session:", session?.user);
     return NextResponse.json({error: "Unauthorized"}, {status: 401});
   }
 
@@ -35,6 +36,11 @@ export async function POST(request: Request) {
   }
 
   const userId = Number(session.user.id);
+
+  if (isNaN(userId)) {
+    console.error("Invalid user ID conversion:", session.user.id, "->", userId);
+    return NextResponse.json({error: "Invalid user ID"}, {status: 400});
+  }
 
   const project = await prisma.project.create({
     data: {

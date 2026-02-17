@@ -113,6 +113,22 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   callbacks: {
+    async signIn({user, profile}) {
+      // Ensure user has the correct database ID for Google OAuth
+      if (profile && "email" in profile) {
+        try {
+          const dbUser = await prisma.user.findUnique({
+            where: {email: profile.email as string},
+          });
+          if (dbUser && dbUser.id) {
+            user.id = dbUser.id.toString();
+          }
+        } catch (error) {
+          console.error("Error in signIn callback:", error);
+        }
+      }
+      return true;
+    },
     // Include user ID in JWT token
     async jwt({token, user}) {
       if (user) {
@@ -124,7 +140,7 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
     },
     // Include user ID in session for client-side access
     async session({session, token}) {
-      if (token) {
+      if (token && token.id) {
         session.user.id = token.id as string;
         session.user.name = (token.name as string | null) ?? null;
         session.user.image = (token.picture as string | null) ?? null;

@@ -10,11 +10,8 @@ export default async function DashboardLayout({
 }) {
   return (
     <div className="h-screen flex bg-background">
-      {/* sidebar - always renders (mobile menu button is inside) */}
       <Sidebar />
-      {/* main content */}
       <main className="flex-1 overflow-auto flex flex-col">
-        {/* header */}
         <DashboardHeader />
         <div className="flex-1 overflow-auto">{children}</div>
       </main>

@@ -3,10 +3,10 @@
 import {useEffect, useMemo, useState} from "react";
 import {usePathname} from "next/navigation";
 import {useSession} from "next-auth/react";
-import {User} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import LogoutButton from "@/components/LogoutButton";
+import Image from "next/image";
 
 const titlesByPath: Record<string, string> = {
   "/dashboard": "Dashboard",
@@ -101,7 +101,17 @@ export default function DashboardHeader() {
               className="rounded-full"
               title="User profile"
             >
-              <User size={18} />
+              {session?.user?.image ? (
+                <Image
+                  src={session.user.image}
+                  alt="User Avatar"
+                  width={32}
+                  height={32}
+                  className="rounded-full"
+                />
+              ) : (
+                <div>{session?.user?.name?.slice(0, 1).toUpperCase()}</div>
+              )}
             </Button>
           </PopoverTrigger>
           <PopoverContent align="end" className="w-80">
