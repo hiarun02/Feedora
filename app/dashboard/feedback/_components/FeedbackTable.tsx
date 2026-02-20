@@ -21,6 +21,7 @@ export type FeedbackRow = {
   id: number;
   name: string;
   email: string | null;
+  category: string;
   rating: number;
   feedback: string;
   createdAt: string;
@@ -65,6 +66,7 @@ export default function FeedbackTable({
             <th className="px-6 py-4">User</th>
             <th className="px-6 py-4">Feedback</th>
             <th className="px-6 py-4">Project</th>
+            <th className="px-6 py-4">Category</th>
             <th className="px-6 py-4">Rating</th>
             <th className="px-6 py-4">Date</th>
             <th className="px-6 py-4 text-right">Actions</th>
@@ -74,7 +76,7 @@ export default function FeedbackTable({
           {feedbacks.length === 0 ? (
             <tr>
               <td
-                colSpan={6}
+                colSpan={7}
                 className="px-6 py-10 text-center text-sm text-muted-foreground"
               >
                 {emptyMessage}
@@ -105,6 +107,9 @@ export default function FeedbackTable({
                   </td>
                   <td className="px-6 py-4 font-medium text-foreground">
                     {feedback.projectName}
+                  </td>
+                  <td className="px-6 py-4 text-muted-foreground">
+                    {feedback.category}
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-1">

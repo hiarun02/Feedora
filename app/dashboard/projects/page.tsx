@@ -235,9 +235,7 @@ export default function DashboardProjectsPage() {
         try {
           const data = (await response.json()) as {error?: string};
           errorMessage = data.error ?? errorMessage;
-        } catch {
-          // Response is not valid JSON, use default message
-        }
+        } catch {}
         throw new Error(errorMessage);
       }
 
