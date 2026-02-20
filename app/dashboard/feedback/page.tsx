@@ -38,19 +38,17 @@ export default async function DashboardFeedbackPage() {
     }),
   ]);
 
-  const tableFeedbacks = feedbacks.map(
-    (feedback: (typeof feedbacks)[number]) => ({
-      id: feedback.id,
-      name: feedback.name,
-      email: feedback.email,
-      category: feedback.category,
-      rating: feedback.rating,
-      feedback: feedback.feedback,
-      createdAt: feedback.createdAt.toISOString(),
-      projectId: feedback.projectid,
-      projectName: feedback.Project?.name ?? "",
-    }),
-  );
+  const tableFeedbacks = feedbacks.map((feedback) => ({
+    id: feedback.id,
+    name: feedback.name,
+    email: feedback.email,
+    category: feedback.category,
+    rating: feedback.rating,
+    feedback: feedback.feedback,
+    createdAt: feedback.createdAt.toISOString(),
+    projectId: feedback.projectid,
+    projectName: feedback.Project?.name ?? "",
+  }));
 
   const hasFeedback = tableFeedbacks.length > 0;
 
