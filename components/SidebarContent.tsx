@@ -17,7 +17,7 @@ import {Button} from "@/components/ui/button";
 import {ThemeToggle} from "@/components/ThemeToggle";
 
 export default function SidebarContent() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const pathname = usePathname();
 

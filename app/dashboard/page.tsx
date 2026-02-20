@@ -168,7 +168,7 @@ const DashboardPage = async () => {
                   {recentFeedbacks.slice(0, 3).map((feedback) => (
                     <div
                       key={feedback.id}
-                      className="flex items-start gap-4 p-4 rounded-lg bg-muted hover:bg-muted transition"
+                      className="flex items-start gap-4 p-3 rounded-lg bg-muted hover:bg-muted transition"
                     >
                       {/* Avatar */}
                       <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-sm">
@@ -178,11 +178,11 @@ const DashboardPage = async () => {
                       {/* Content */}
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-sm">{feedback.name}</p>
-                        <p className="text-sm mt-1 break-words">
+                        <p className="text-sm break-words">
                           {feedback.feedback.slice(0, 50) +
                             (feedback.feedback.length > 50 ? "..." : "")}
                         </p>
-                        <div className="flex items-center gap-2 mt-2">
+                        <div className="flex items-center gap-2">
                           <div className="flex gap-0.5">
                             {Array.from({length: 5}).map((_, i) => (
                               <span

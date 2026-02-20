@@ -27,8 +27,6 @@ const formatDate = (value: string) =>
     year: "numeric",
   }).format(new Date(value));
 
-
-
 const renderStars = (rating: number) =>
   Array.from({length: 5}).map((_, index) => (
     <Star

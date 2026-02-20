@@ -178,6 +178,7 @@ const script = `(function () {
       var formData = new FormData(form);
       var ratingValue = formData.get("rating");
       var ratingNumber = ratingValue ? Number(ratingValue) : 0;
+      var categoryValue = String(formData.get("category") || "").trim();
       var nameValue = String(formData.get("name") || "").trim();
       var feedbackValue = String(formData.get("feedback") || "").trim();
       var emailValue = String(formData.get("email") || "").trim();
@@ -196,6 +197,7 @@ const script = `(function () {
         projectId: Number(projectId),
         name: nameValue,
         email: emailValue || undefined,
+        category: categoryValue || "General",
         rating: ratingNumber,
         feedback: feedbackValue,
       };

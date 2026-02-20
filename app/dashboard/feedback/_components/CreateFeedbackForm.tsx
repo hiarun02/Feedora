@@ -36,6 +36,7 @@ export default function CreateFeedbackForm({
   );
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [category, setCategory] = useState("general");
   const [rating, setRating] = useState("none");
   const [feedback, setFeedback] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -57,6 +58,7 @@ export default function CreateFeedbackForm({
         projectId: Number(projectId),
         name: name.trim(),
         email: email.trim() || undefined,
+        category,
         rating: rating && rating !== "none" ? Number(rating) : undefined,
         feedback: feedback.trim(),
       };
@@ -75,6 +77,7 @@ export default function CreateFeedbackForm({
 
       setName("");
       setEmail("");
+      setCategory("general");
       setRating("none");
       setFeedback("");
       router.refresh();
@@ -130,6 +133,20 @@ export default function CreateFeedbackForm({
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
+      </div>
+      <div className="grid gap-2">
+        <Label htmlFor="feedback-category">Category</Label>
+        <Select value={category} onValueChange={setCategory}>
+          <SelectTrigger id="feedback-category" className="w-full">
+            <SelectValue placeholder="Select a category" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="general">General</SelectItem>
+            <SelectItem value="bug">Bug</SelectItem>
+            <SelectItem value="feature">Feature request</SelectItem>
+            <SelectItem value="ui">UI/UX</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
       <div className="grid gap-2">
         <Label htmlFor="feedback-rating">Rating</Label>
