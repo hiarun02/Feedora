@@ -42,6 +42,7 @@ export default async function DashboardFeedbackPage() {
     id: feedback.id,
     name: feedback.name,
     email: feedback.email,
+    category: feedback.category,
     rating: feedback.rating,
     feedback: feedback.feedback,
     createdAt: feedback.createdAt.toISOString(),
@@ -63,7 +64,7 @@ export default async function DashboardFeedbackPage() {
       </div>
 
       {hasFeedback ? (
-        <FeedbackInbox feedbacks={tableFeedbacks} />
+        <FeedbackInbox feedbacks={tableFeedbacks} projects={projects} />
       ) : (
         <div className="mx-auto mt-6 grid gap-4 rounded-2xl border bg-card p-8">
           <div className="flex flex-col items-center gap-3 text-center">
