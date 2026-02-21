@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import credentialProvider from "next-auth/providers/credentials";
 import {z} from "zod";
 import bcrypt from "bcryptjs";
-import prisma from "./db";
+import {prisma} from "./db";
 
 const credentialsSchema = z.object({
   email: z.string().email(),
