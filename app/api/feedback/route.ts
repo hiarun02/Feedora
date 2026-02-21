@@ -1,6 +1,6 @@
 import {NextResponse} from "next/server";
 import {z} from "zod";
-import prisma from "@/lib/db";
+import {prisma} from "@/lib/db";
 
 export const runtime = "nodejs";
 
@@ -13,6 +13,12 @@ const feedbackSchema = z.object({
     }
     return value;
   }, z.string().email().max(255).optional()),
+  category: z.preprocess((value) => {
+    if (typeof value === "string" && value.trim() === "") {
+      return undefined;
+    }
+    return value;
+  }, z.string().min(1).max(100).optional()),
   rating: z.number().int().min(0).max(5).optional(),
   feedback: z.string().min(1).max(1000),
 });
@@ -69,6 +75,7 @@ export async function POST(request: Request) {
       projectid: parsed.data.projectId,
       name: parsed.data.name,
       email: parsed.data.email ?? null,
+      category: parsed.data.category ?? "General",
       rating: parsed.data.rating ?? 4,
       feedback: parsed.data.feedback,
     };

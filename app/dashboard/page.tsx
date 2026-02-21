@@ -1,5 +1,5 @@
 import {auth} from "@/lib/auth";
-import prisma from "@/lib/db";
+import {prisma} from "@/lib/db";
 import {Button} from "@/components/ui/button";
 import {Card} from "@/components/ui/card";
 import {BarChart3, MessageSquare, Star} from "lucide-react";

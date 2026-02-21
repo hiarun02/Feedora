@@ -3,7 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -29,6 +31,7 @@ model Feedback {
   name      String
   email     String?
   rating    Int      @default(4)
+  category  String   @default("General")
   feedback  String
   projectid Int
   Project   Project  @relation(fields: [projectid], references: [id], onDelete: Cascade)
