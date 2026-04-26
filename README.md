@@ -1,6 +1,6 @@
 ## Feedora
 
-Feedora is a simple and powerful feedback collection platform that helps businesses capture and manage user feedback efficiently.
+Feedora is a feedback collection app for product teams and small businesses. It gives you a simple embed widget, a dashboard to manage responses, and a docs page with examples for showing feedback on your own site.
 
 <img width="1230" height="748" alt="snippet (76)" src="https://github.com/user-attachments/assets/cb4ea51e-880a-459a-9419-9e5ea8e2d1c7" />
 
@@ -30,7 +30,44 @@ Feedora is a simple and powerful feedback collection platform that helps busines
 
 Use the docs page if you want to show feedback cards in a scrolling row on your site. The app includes a reusable `Marquee` component and a public feedback endpoint for that.
 
-## Tech Stack
+## Widget embed
+
+Use this script on your site:
+
+```html
+<script
+  id="feedora-widget-script"
+  src="https://your-domain.com/widget/widget.js"
+  data-project-id="1"
+  data-api-url="https://your-domain.com"
+  data-theme-class="white"
+  defer
+></script>
+```
+
+`data-theme-class` supports:
+
+- `blue`
+- `emerald`
+- `rose`
+- `amber`
+- `slate`
+- `white`
+
+## Marquee example
+
+Use the docs page if you want to show feedback cards in a scrolling row on your site. The app includes a reusable `Marquee` component and a public feedback endpoint for that.
+
+## Tech stack
+
+- Next.js 15
+- React 19
+- TypeScript
+- Tailwind CSS
+- Prisma
+- PostgreSQL
+- NextAuth
+- Radix UI
 
 - Next.js 14 - React framework for production
 - TypeScript - Type-safe development
