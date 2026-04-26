@@ -4,6 +4,13 @@ import {useEffect, useMemo, useState} from "react";
 import {Code, Copy} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -21,6 +28,7 @@ export default function ProjectSnippetDialog({
 }: ProjectSnippetDialogProps) {
   const [origin, setOrigin] = useState("");
   const [copied, setCopied] = useState(false);
+  const [themeClass, setThemeClass] = useState("blue");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -40,8 +48,8 @@ export default function ProjectSnippetDialog({
 
   const snippet = useMemo(
     () =>
-      `<script\n  id="feedora-widget-script"\n  src="${widgetScriptUrl}"\n  data-project-id="${projectId}"\n  data-api-url="${apiUrl}"\n  defer\n></script>`,
-    [widgetScriptUrl, projectId, apiUrl],
+      `<script\n  id="feedora-widget-script"\n  src="${widgetScriptUrl}"\n  data-project-id="${projectId}"\n  data-api-url="${apiUrl}"\n  data-theme-class="${themeClass}"\n  defer\n></script>`,
+    [widgetScriptUrl, projectId, apiUrl, themeClass],
   );
 
   const handleCopy = async () => {
@@ -75,6 +83,25 @@ export default function ProjectSnippetDialog({
             Paste this script before the closing{" "}
             <span className="font-medium">&lt;/body&gt;</span>
             tag.
+          </p>
+        </div>
+        <div className="space-y-2">
+          <p className="text-sm font-medium">Widget button theme</p>
+          <Select value={themeClass} onValueChange={setThemeClass}>
+            <SelectTrigger className="w-full sm:w-60">
+              <SelectValue placeholder="Select a theme" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="blue">Blue</SelectItem>
+              <SelectItem value="emerald">Emerald</SelectItem>
+              <SelectItem value="rose">Rose</SelectItem>
+              <SelectItem value="amber">Amber</SelectItem>
+              <SelectItem value="slate">Slate</SelectItem>
+            </SelectContent>
+          </Select>
+          <p className="text-xs text-muted-foreground">
+            This color is used for both the floating widget button and the form
+            submit button.
           </p>
         </div>
         <div className="relative rounded-2xl bg-slate-950 p-5 text-sm text-slate-100">

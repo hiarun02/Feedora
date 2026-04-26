@@ -6,6 +6,7 @@ type WidgetScriptProps = {
   projectId?: string;
   apiUrl?: string;
   scriptUrl?: string;
+  themeClass?: "blue" | "emerald" | "rose" | "amber" | "slate";
 };
 
 const WIDGET_SCRIPT_ID = "feedora-widget-script";
@@ -17,6 +18,7 @@ export default function WidgetScript({
   projectId,
   apiUrl,
   scriptUrl,
+  themeClass = "blue",
 }: WidgetScriptProps) {
   useEffect(() => {
     const cleanup = () => {
@@ -58,6 +60,7 @@ export default function WidgetScript({
     if (existingScript) {
       existingScript.setAttribute("data-project-id", projectId);
       existingScript.setAttribute("data-api-url", finalApiUrl);
+      existingScript.setAttribute("data-theme-class", themeClass);
       return cleanup;
     }
 
@@ -68,10 +71,11 @@ export default function WidgetScript({
     script.defer = true;
     script.setAttribute("data-project-id", projectId);
     script.setAttribute("data-api-url", finalApiUrl);
+    script.setAttribute("data-theme-class", themeClass);
     document.body.appendChild(script);
 
     return cleanup;
-  }, [projectId, apiUrl, scriptUrl]);
+  }, [projectId, apiUrl, scriptUrl, themeClass]);
 
   return null;
 }

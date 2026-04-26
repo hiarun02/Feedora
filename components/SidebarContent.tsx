@@ -12,6 +12,7 @@ import {
   LayoutDashboard,
   FolderDot,
   MessageCircle,
+  NotebookPen,
 } from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {ThemeToggle} from "@/components/ThemeToggle";
@@ -25,6 +26,7 @@ export default function SidebarContent() {
     {name: "Dashboard", icon: LayoutDashboard, href: "/dashboard"},
     {name: "Projects", icon: FolderDot, href: "/dashboard/projects"},
     {name: "Feedbacks", icon: MessageCircle, href: "/dashboard/feedback"},
+    {name: "Docs", icon: NotebookPen, href: "/dashboard/docs"},
   ];
 
   return (
