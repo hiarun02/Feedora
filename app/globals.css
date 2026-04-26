@@ -122,3 +122,20 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes feedora-marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@layer utilities {
+  .animate-feedora-marquee {
+    animation-name: feedora-marquee;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+}

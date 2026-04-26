@@ -2,10 +2,6 @@ export const runtime = "nodejs";
 
 const script = `(function () {
   var existing = document.getElementById("feedora-widget-root");
-  if (existing) {
-    return;
-  }
-
   var scriptEl = document.currentScript || document.getElementById("feedora-widget-script");
   var projectId = scriptEl && scriptEl.getAttribute("data-project-id") ? scriptEl.getAttribute("data-project-id") : "";
   var apiUrl = scriptEl && scriptEl.getAttribute("data-api-url") ? scriptEl.getAttribute("data-api-url") : "";
@@ -14,14 +10,36 @@ const script = `(function () {
   var logoUrl = assetBase.replace(/\\/$/, "") + "/favicon.svg";
   var resolvedApiUrl = apiUrl || window.location.origin;
   var endpoint = resolvedApiUrl.replace(/\\/$/, "") + "/api/feedback";
+  var themeClass = scriptEl && scriptEl.getAttribute("data-theme-class") ? scriptEl.getAttribute("data-theme-class") : "";
+  var normalizedThemeClass = String(themeClass || "").trim().toLowerCase().replace(/^feedora-theme-/, "").replace(/^theme-/, "");
+  var themeAliases = {
+    blue: "blue",
+    emerald: "emerald",
+    green: "emerald",
+    rose: "rose",
+    red: "rose",
+    amber: "amber",
+    yellow: "amber",
+    slate: "slate",
+    white: "white",
+    gray: "slate",
+    grey: "slate"
+  };
+  var resolvedThemeClass = themeAliases[normalizedThemeClass] || "blue";
+
+  if (existing) {
+    existing.className = "feedora-theme-" + resolvedThemeClass;
+    return;
+  }
 
   var root = document.createElement("div");
   root.id = "feedora-widget-root";
+  root.className = "feedora-theme-" + resolvedThemeClass;
   document.body.appendChild(root);
 
   var button = document.createElement("button");
   button.type = "button";
-  button.innerHTML = "<svg viewBox='0 0 24 24' width='22' height='22' aria-hidden='true' focusable='false'><path fill='#ffffff' d='M21 12c0 4.418-4.03 8-9 8-1.14 0-2.23-.18-3.24-.5L3 21l1.6-4.4C3.6 15.4 3 13.77 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'/></svg>";
+  button.innerHTML = "<svg viewBox='0 0 24 24' width='22' height='22' aria-hidden='true' focusable='false'><path fill='currentColor' d='M21 12c0 4.418-4.03 8-9 8-1.14 0-2.23-.18-3.24-.5L3 21l1.6-4.4C3.6 15.4 3 13.77 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'/></svg>";
   button.setAttribute("aria-label", "Open feedback widget");
 
   var panel = document.createElement("div");
@@ -92,13 +110,19 @@ const script = `(function () {
   var styles = document.createElement("style");
   styles.id = "feedora-widget-styles";
   styles.textContent =
-    "#feedora-widget-root { position: fixed; bottom: 24px; right: 24px; z-index: 2147483647; }" +
+    "#feedora-widget-root { position: fixed; bottom: 24px; right: 24px; z-index: 2147483647; --feedora-primary: #2563eb; --feedora-primary-hover: #1d4ed8; --feedora-primary-shadow: rgba(37,99,235,0.25); --feedora-primary-contrast: #ffffff; }" +
+    "#feedora-widget-root.feedora-theme-emerald { --feedora-primary: #059669; --feedora-primary-hover: #047857; --feedora-primary-shadow: rgba(5,150,105,0.3); --feedora-primary-contrast: #ffffff; }" +
+    "#feedora-widget-root.feedora-theme-rose { --feedora-primary: #e11d48; --feedora-primary-hover: #be123c; --feedora-primary-shadow: rgba(225,29,72,0.28); --feedora-primary-contrast: #ffffff; }" +
+    "#feedora-widget-root.feedora-theme-amber { --feedora-primary: #f59e0b; --feedora-primary-hover: #d97706; --feedora-primary-shadow: rgba(245,158,11,0.35); --feedora-primary-contrast: #1f2937; }" +
+    "#feedora-widget-root.feedora-theme-slate { --feedora-primary: #334155; --feedora-primary-hover: #1e293b; --feedora-primary-shadow: rgba(51,65,85,0.32); --feedora-primary-contrast: #ffffff; }" +
+    "#feedora-widget-root.feedora-theme-white { --feedora-primary: #ffffff; --feedora-primary-hover: #f8fafc; --feedora-primary-shadow: rgba(15,23,42,0.18); --feedora-primary-contrast: #0f172a; }" +
     "#feedora-widget-root button { cursor: pointer; }" +
     "#feedora-widget-root > button {" +
-    "background: #2563eb; color: #fff; border: none; border-radius: 999px;" +
-    "padding: 12px; width: 48px; height: 48px; box-shadow: 0 12px 24px rgba(37,99,235,0.25);" +
+    "background: var(--feedora-primary); color: var(--feedora-primary-contrast); border: none; border-radius: 999px;" +
+    "padding: 12px; width: 48px; height: 48px; box-shadow: 0 12px 24px var(--feedora-primary-shadow);" +
     "display: inline-flex; align-items: center; justify-content: center;" +
     "}" +
+    "#feedora-widget-root > button:hover { background: var(--feedora-primary-hover); }" +
     "#feedora-widget-root > button img { width: 22px; height: 22px; filter: brightness(0) invert(1); }" +
     "#feedora-widget-panel {" +
     "position: fixed; bottom: 76px; right: 24px; width: 360px; max-width: calc(100vw - 48px);" +
@@ -127,13 +151,14 @@ const script = `(function () {
     ".feedora-widget-star-input:checked ~ .feedora-widget-star svg { fill: #f59e0b; }" +
     ".feedora-widget-star-input:focus-visible + .feedora-widget-star { outline: 2px solid #94a3b8; border-radius: 6px; }" +
     ".feedora-widget-form button {" +
-    "background: #2563eb; color: #fff; border: none; border-radius: 12px; padding: 12px 14px; font-size: 14px; font-weight: 600; }" +
+    "background: var(--feedora-primary); color: var(--feedora-primary-contrast); border: none; border-radius: 12px; padding: 12px 14px; font-size: 14px; font-weight: 600; }" +
+    ".feedora-widget-form button:hover { background: var(--feedora-primary-hover); }" +
     ".feedora-widget-status { margin: 0; font-size: 12px; color: #64748b; }";
 
   panel.id = "feedora-widget-panel";
   root.appendChild(button);
   document.head.appendChild(styles);
-  document.body.appendChild(panel);
+  root.appendChild(panel);
 
   var form = body.querySelector("[data-widget-form]");
   var status = body.querySelector("[data-status]");
@@ -248,7 +273,7 @@ export async function GET() {
   return new Response(script, {
     headers: {
       "Content-Type": "application/javascript; charset=utf-8",
-      "Cache-Control": "public, max-age=60",
+      "Cache-Control": "no-store",
     },
   });
 }

@@ -37,6 +37,53 @@ export async function OPTIONS(request: Request) {
   });
 }
 
+export async function GET(request: Request) {
+  const origin = request.headers.get("origin");
+  const {searchParams} = new URL(request.url);
+  const projectIdParam = searchParams.get("projectId");
+  const limitParam = searchParams.get("limit");
+
+  const projectId = Number(projectIdParam);
+  const parsedLimit = Number(limitParam ?? "12");
+  const limit = Number.isInteger(parsedLimit)
+    ? Math.max(1, Math.min(parsedLimit, 50))
+    : 12;
+
+  if (!Number.isInteger(projectId) || projectId <= 0) {
+    return NextResponse.json(
+      {error: "A valid projectId query param is required"},
+      {status: 400, headers: getCorsHeaders(origin)},
+    );
+  }
+
+  try {
+    const feedback = await prisma.feedback.findMany({
+      where: {projectid: projectId},
+      orderBy: {createdAt: "desc"},
+      take: limit,
+      select: {
+        id: true,
+        name: true,
+        rating: true,
+        category: true,
+        feedback: true,
+        createdAt: true,
+      },
+    });
+
+    return NextResponse.json(
+      {feedback},
+      {status: 200, headers: getCorsHeaders(origin)},
+    );
+  } catch (error) {
+    console.error("Failed to fetch feedback:", error);
+    return NextResponse.json(
+      {error: "Failed to fetch feedback"},
+      {status: 500, headers: getCorsHeaders(origin)},
+    );
+  }
+}
+
 export async function POST(request: Request) {
   const origin = request.headers.get("origin");
 
