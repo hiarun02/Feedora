@@ -56,7 +56,9 @@ function FeedbackTile({item}: {item: PublicFeedback}) {
 
 export default function DocsPage() {
   const [projectId, setProjectId] = useState("1");
-  const [apiBaseUrl, setApiBaseUrl] = useState("http://localhost:3000");
+  const [apiBaseUrl, setApiBaseUrl] = useState(
+    process.env.NEXT_PUBLIC_API_URL ?? "https://feedora.hiarun.me",
+  );
   const [items, setItems] = useState<PublicFeedback[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -64,7 +66,9 @@ export default function DocsPage() {
 
   const sanitizedProjectId = projectId.trim() || "1";
   const sanitizedApiUrl =
-    apiBaseUrl.trim().replace(/\/$/, "") || "http://localhost:3000";
+    apiBaseUrl.trim().replace(/\/$/, "") ||
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://feedora.hiarun.me";
 
   const htmlSnippet = useMemo(
     () =>
@@ -94,7 +98,16 @@ export default function DocsPage() {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to load feedback list");
+        let message = "Failed to load feedback list";
+        try {
+          const data = (await response.json()) as {error?: string};
+          if (data.error) {
+            message = data.error;
+          }
+        } catch {
+          // keep fallback message
+        }
+        throw new Error(message);
       }
 
       const data = (await response.json()) as {feedback?: PublicFeedback[]};
@@ -133,7 +146,7 @@ export default function DocsPage() {
             <Input
               value={apiBaseUrl}
               onChange={(event) => setApiBaseUrl(event.target.value)}
-              placeholder="https://your-domain.com"
+              placeholder="https://feedora.hiarun.me"
             />
           </div>
         </CardContent>

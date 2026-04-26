@@ -1,27 +1,63 @@
+# Feedora
 
-Feedora is a simple and powerful feedback collection platform that helps businesses capture and manage user feedback efficiently.
+Feedora is a feedback collection app for product teams and small businesses. It gives you a simple embed widget, a dashboard to manage responses, and a docs page with examples for showing feedback on your own site.
 
-## About Feedora
+## What it does
 
-Feedora makes it easy for businesses to collect valuable insights from their users. With a lightweight embedding widget and intuitive dashboard, companies can gather feedback, categorize responses, and turn ideas into improvements.
-<img width="3600" height="2025" alt="screenshot-studio-1771225746879" src="https://github.com/user-attachments/assets/b3670c62-5ae1-42fb-86fd-45b46147a7db" />
-## Problem We Solve
+- Embed a feedback button on any website
+- Collect ratings, messages, names, emails, and categories
+- Manage projects from the dashboard
+- View and delete feedback in one place
+- Open full feedback details in the inbox
+- Customize the widget button color theme
+- Show feedback in a scrolling marquee view
+- Copy ready-to-use embed snippets from the docs page
+- Sign in securely with NextAuth
+- Switch between light and dark theme
 
-Many businesses struggle to collect structured feedback from users efficiently. Feedora solves this by providing:
+## Main pages
 
-- A simple embed solution that requires minimal code
-- Centralized feedback management dashboard
-- Quick categorization and organization of feedback
-- Easy data export for analysis
-- A secure and reliable platform for handling user data
+- `/dashboard` - overview
+- `/dashboard/projects` - create, edit, and delete projects
+- `/dashboard/feedback` - feedback inbox
+- `/dashboard/docs` - embed instructions and marquee example
 
-## Tech Stack
+## Widget embed
 
-- Next.js 14 - React framework for production
-- TypeScript - Type-safe development
-- Tailwind CSS - Utility-first CSS framework
-- Prisma ORM - Database management and migrations
-- NextAuth.js - Authentication and authorization
-- Radix UI / shadcn/ui - Component library
-- Lucide React - Icon library
-- PostgreSQL - Database
+Use this script on your site:
+
+```html
+<script
+  id="feedora-widget-script"
+  src="https://your-domain.com/widget/widget.js"
+  data-project-id="1"
+  data-api-url="https://your-domain.com"
+  data-theme-class="white"
+  defer
+></script>
+```
+
+`data-theme-class` supports:
+
+- `blue`
+- `emerald`
+- `rose`
+- `amber`
+- `slate`
+- `white`
+
+## Marquee example
+
+Use the docs page if you want to show feedback cards in a scrolling row on your site. The app includes a reusable `Marquee` component and a public feedback endpoint for that.
+
+## Tech stack
+
+- Next.js 15
+- React 19
+- TypeScript
+- Tailwind CSS
+- Prisma
+- PostgreSQL
+- NextAuth
+- Radix UI
+
