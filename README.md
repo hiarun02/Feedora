@@ -11,11 +11,8 @@ Feedora is a feedback collection app for product teams and small businesses. It 
 - Manage projects from the dashboard
 - View and delete feedback in one place
 - Open full feedback details in the inbox
-- Customize the widget button color theme
-- Show feedback in a scrolling marquee view
 - Copy ready-to-use embed snippets from the docs page
 - Sign in securely with NextAuth
-- Switch between light and dark theme
 
 `data-theme-class` supports:
 
